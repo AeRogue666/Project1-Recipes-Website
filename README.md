@@ -1,6 +1,6 @@
 # Project1 - Recipes Website
 Bienvenue sur la page d'accueil de Project1.
-Ce projet est un site de cuisine créé avec Express, Directus et CSS.
+Ce projet est un site de cuisine créé avec ExpressJS (Javascript + EJS), Directus (API) et CSS.
 Il est assez complet, comprenant notamment :
 ## Publique (sans connexion) :
 - Un système de recherche
