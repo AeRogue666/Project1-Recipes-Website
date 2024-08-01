@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<main>
+    <section class="top-section">
+        <h1 class="article-title title">Dernières recettes publiées</h1>
+        <div class="grid-container-3 flexdir-row">
+            <% latestRecipesList.map(recipe => {%>
+            <a href="/recipe/<%= recipe.id %>">
+                <article class="articles-container">
+                    <div class="article-content minh20rem">
+                        <img class="img320x180" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                        <h2 class="article-content-title"><%= recipe.title %></h2>
+                        <p class="article-content-paragraph"><%= recipe.description %></p>
+                    </div>
+                    <div class="opened flexdir-col flexdir-col-desktop width100">
+                        <div class="recipe-viewbar-content flexdir-row margin1remauto">
+                            <p class="article-content-paragraph font-small marginauto1rem"><%= recipe.favorites %> <i class="fa-solid fa-eye"></i></p>
+                            <p class="article-content-paragraph margin-recipe">Publiée le <%= recipe.date_published %> par <b class="font-small"><%= recipe.name %></b></p>
+                        </div>
+                    </div>
+                </article>
+            </a>
+            <% }); %>
+        </div>
+    </section>
+    <section class="middle-section">
+        <h1 class="article-title title">Recettes les plus vues</h1>
+        <div class="grid-container-3 flexdir-row">
+            <% favoritesRecipesList.map(recipe => {%>
+                <article class="articles-container">
+                    <div class="article-content minh20rem">
+                        <img class="img320x180" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                        <h2 class="article-content-title"><%= recipe.title %></h2>
+                        <p class="article-content-paragraph"><%= recipe.description %></p>
+                        <div class="recipe-viewbar-content flexdir-row">
+                            <p class="article-content-paragraph font-small no-margin"><%= recipe.favorites %> <i class="fa-solid fa-eye"></i></p>
+                            <p class="article-content-paragraph margin-recipe">Publiée le <%= recipe.date_published %> par <b class="font-small"><%= recipe.name %></b></p>
+                        </div>
+                    </div>
+                </article>
+            <% }); %>
+        </div>
+    </section>
+    <section class="bottom-section">
+        <h1 class="article-title title">Recettes les plus aimées</h1>
+        <div class="grid-container-3 flexdir-row">
+            <% favoritesRecipesList.map(recipe => {%>
+            <a href="/recipe/<%= recipe.id %>">
+                <article class="articles-container">
+                    <div class="article-content minh20rem">
+                        <img class="img320x180" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                        <h2 class="article-content-title"><%= recipe.title %></h2>
+                        <p class="article-content-paragraph"><%= recipe.description %></p>
+                        <div class="recipe-viewbar-content flexdir-row">
+                            <p class="article-content-paragraph font-small no-margin"><%= recipe.favorites %> <i class="fa-solid fa-heart orange"></i></p>
+                            <p class="article-content-paragraph margin-recipe">Publiée le <%= recipe.date_published %> par <b class="font-small"><%= recipe.name %></b></p>
+                        </div>
+                    </div>
+                </article>
+            </a>
+            <% }); %>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

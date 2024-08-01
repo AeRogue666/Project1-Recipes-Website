@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<main class="height100">
+    <section class="top-section">
+        <section class="left-section">
+            <div class="register-title">
+                <h1><%= title %></h1>
+            </div>
+            <div class="register-container">
+                <form class="register-form" id="registerform" action="/register" method="post" autocomplete="off">
+                    <label for="input-pseudo">Pseudonyme
+                        <input class="register-input" type="text" name="pseudo" id="input-pseudo" autocomplete="off" aria-placeholder="Votre pseudonyme" required>
+                    </label>
+                    <label for="input-email">Email
+                        <input class="register-input" type="email" name="email" id="input-email" autocomplete="off" aria-placeholder="Votre adresse mail" required>
+                        <div class="invisible" id="divmail">
+                            <p class="invalid" id="mailvalid">L'adresse mail n'est pas valide</p>
+                        </div>
+                    </label>
+                    <label for="input-pwd">Mot de passe
+                        <input class="register-input" type="password" name="pwd" id="input-pwd" autocomplete="off" title="Must contain at least one number and one uppercase and lowercase letter, and at least 12 or more characters" aria-placeholder="Votre mot de passe" required>
+                    </label>
+                    <div class="invalid-pwd-container" id="invalidpwd">
+                        <p class="invalid" id="pwdvalidator">Un mot de passe doit avoir entre <b>16</b> et <b>34</b> caractères.</p>
+                    </div>
+                    <label for="input-pwd-confirm">Confirmer le mot de passe
+                        <input class="register-input" type="password" name="pwdrepeat" id="input-pwd-confirm" autocomplete="off" title="Must contain at least one number and one uppercase and lowercase letter, and at least 12 or more characters" aria-placeholder="Confirmer le mot de passe" required>
+                    </label>
+                    <div class="invalid-pwd-container" id="invalidrepeat">
+                        <p class="invalid" id="pwdrepeatinvalid">Les deux mots de passes ne correspondent pas</p>
+                        <p class="valid invisible" id="pwdrepeatvalid">les deux mots de passes sont identiques</p>
+                    </div>
+                    <div class="tos-container">
+                        <p>En créant un compte, vous acceptez les <a href="/cgu">termes et conditions</a> du site</p>
+                    </div>
+                    <button class="register-btn-form" type="submit" id="registerbtn">Créer</button>
+                </form>
+                <div class="register-ardaccount">
+                    <p>Déjà un compte ?</p>
+                    <a class="login-btn-form login-btn-click" id="register-ardaccount-btn" href="/login">Cliquez-ici !</a>
+                </div>
+                <% if(registerError) { %>
+                    <div class="login-error-container">
+                        <% registerError.map(error => { %>
+                            <p class="invalid" id="error-rs<%=error.id%>"><%= error.reason %> : <%= error.real_reason %></p>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+    </section>
+</main>
+<script defer src="/js/validationForm.js"></script>
+<%- include('partials/footer') %>

@@ -1,0 +1,63 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('burger') %>
+    <form class="top-section" action="" method="post">
+        <legend class="title"><%= title %></legend>
+        <fieldset class="left-section margin1rem">
+            <% ticketFormTypeList.map(form => { %>
+            <label class="label-form" for="input-<%= form.id %>">
+                <h3><%= form.title %></h3>
+                <p>(<%= form.subtitle %>)</p>
+                <input class="label-form-input" id="input-<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" autocomplete="off" autocapitalize="off">
+            </label>
+            <% }); %>
+            <% ticketFormProblemLevelList.map(form => { %>
+                <fieldset class="articles-container">
+                    <h3><%= form.title %></h3>
+                    <p>(<%= form.subtitle %>)</p>
+                    <div class="grid-ticket-container">
+                    <% form.data.map(checkbox => { %>
+                        <label class="label-form-ticket article-content-user-paragraph margin1rem flexdir-row justify-center <%= checkbox.color %> " for="input-<%= checkbox.name %>-<%= checkbox.value %>">
+                            <div class="label-form-text-container">
+                                <%= checkbox.title %>
+                                <i class="fa-solid fa-<%= checkbox.icon %>"></i>
+                            </div>
+                            <input class="input-form-role" id="input-<%= checkbox.name %>-<%= checkbox.value %>" type="checkbox" name="<%= checkbox.name %>" value="<%= checkbox.value %>" autocomplete="off" autocapitalize="off">
+                        </label>
+                    <% }); %>
+                    </div>
+                </fieldset>
+            <% }); %>
+            <% ticketFormProblemTypeList.map(form => { %>
+                <fieldset class="articles-container">
+                    <h3><%= form.title %></h3>
+                    <p>(<%= form.subtitle %>)</p>
+                    <div class="grid-ticket-container">
+                    <% form.data.map(checkbox => { %>
+                        <label class="label-form-ticket article-content-user-paragraph margin1rem flexdir-row justify-center <%= checkbox.color %> " for="input-<%= checkbox.name %>-<%= checkbox.value %>">
+                            <div class="label-form-text-container">
+                                <%= checkbox.title %>
+                                <i class="fa-solid fa-<%= checkbox.icon %>"></i>
+                            </div>
+                            <input class="input-form-role" id="input-<%= checkbox.name %>-<%= checkbox.value %>" type="checkbox" name="<%= checkbox.name %>" value="<%= checkbox.value %>" autocomplete="off" autocapitalize="off">
+                        </label>
+                    <% }); %>
+                    </div>
+                </fieldset>
+            <% }); %>
+            <% ticketFormTextareaList.map(form => { %>
+                <label class="label-form" for="textarea-<%= form.id %>">
+                    <h3><%= form.title %></h3>
+                    <p>(<%= form.maxlength %> caractères maximum)</p>
+                    <textarea class="autoresizing textarea minh-minw-form" id="textarea-<%= form.id %>" placeholder="<%= form.placeholder %>" name="<%= form.name %>" value="<%= form.value %>" maxlength="<%= form.maxlength %>"></textarea>
+                </label>
+            <% }); %>
+        </fieldset>
+        <fieldset class="right-section margin1rem">
+            <button class="update-btn-form ctg-btn-form" type="submit" name="submit-new-ticket" id="submitnewticket">Envoyer</button>
+        </fieldset>
+    </form>
+</main>
+
+<%- include('../partials/footer') %>

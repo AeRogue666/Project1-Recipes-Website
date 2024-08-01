@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('burger') %>
+    <section class="top-section">
+        <h1 class="title"><%= title %></h1>
+        <div class="articles-container">
+            <article class="article-content no-maxwmaxh">
+                <h3 class="paragraph red">Merci de lire l'intégralité de la page avant de faire une demande de rôle !</h3>
+                <fieldset class="left-section">
+                    <div class="about-content">
+                        <legend class="article-content-title">1. Qu'est-ce qu'un auteur ?</legend>
+                        <p class="article-content-paragraph">Un auteur est une personne pouvant écrire, modifier et supprimer des recettes de cuisine.</p>
+                        <p class="article-content-paragraph">Ce rôle implique d'écrire des recettes lisibles et compréhensibles par le plus grand nombre.</p>
+                        <p class="article-content-paragraph">Les recettes doivent avoir été écrites par l'auteur lui-même et ne peuvent provenir d'une source extérieure.</p>
+                    </div>
+                    <div class="about-content">
+                        <legend class="article-content-title">2. Les règles à respecter en tant qu'auteur</legend>
+                        <p class="article-content-paragraph">Un auteur a de nombreuses libertés mais aussi des règles et contraintes à respecter.</p>
+                        <p class="article-content-paragraph">- <b class="red">Pas de re-upload</b> d'une ancienne recette.</p>
+                        <p class="article-content-paragraph">- Il ne sert à rien de faire un ticket pour connaître l'état d'avancement de la publication d'une recette.</p>
+                        <p class="article-content-paragraph">- Un auteur a la responsabilité de gérer l'espace commentaire de ses recettes.</p>
+                        <p class="article-content-paragraph">- Les images des recettes doivent provenir de sources publiques, référencées et si possible sous licence <b>Creative Commons (CC)</b> tel que <a class="skyblue" href="https://commons.wikimedia.org/wiki/Accueil" target="_blank">Wikimedia</a> dans un format se rapprochant du 16:9 (si possible 640x360px).</p>
+                        <p class="article-content-paragraph">- <b class="red">Aucune injure sous quelques formes que ce soit ne sera toléré</b>, ni dans les recettes, ni dans les commentaires, ni dans les tickets.</p>
+                        <p class="article-content-paragraph">- <b class="redorange">L'intégralité des règles appliquées et appliquables aux utilisateurs sont appliquables aux auteurs.</b></p>
+                        <p class="article-content-paragraph">Le rôle <b class="skyblue">Auteur</b> n'est <b class="redorange">pas acquis définitivement</b>. Il peut vous être retiré à tout moment, sans préavis de notre part si vous enfreignez les règles.</p>
+                        <p class="article-content-paragraph">Les recettes que vous publiez sur le site <b>project1.com</b> deviennent publiques au moment de leur publication et sont donc utilisables par tous.</p>
+                        <p class="article-content-paragraph">Le <b>format de rédaction</b> indiqué sur la page de création d'une recette <b class="redorange">doit être respecté</b>. Si nous constatons une erreur, vous devrez modifier la recette avant publication.</p>
+                        <p class="article-content-paragraph">Vous serez informé de toutes modifications à effectuer sur vos recettes par un message présent en haut de votre recette sur la page de modification.</p>
+                    </div>
+                    <div class="about-content">
+                        <legend class="article-content-title">3. Devenir auteur</legend>
+                        <p class="article-content-paragraph">Pour devenir auteur, ouvrez sur le menu en haut à droite de cette page et cliquez sur <b class="orange">Créer un ticket</b>.</p>
+                        <p class="article-content-paragraph">Et remplir le ticket de la manière suivante: </p>
+                        <% userInfo.map(user => { %>
+                        <p class="article-content-paragraph">- Le titre doit être <b id="title-author-ticket" name="copy-text">Devenir auteur: <%= user.pseudonyme %></b> (Cliquez sur le texte pour copier)</p>
+                        <% }); %>
+                        <p class="article-content-paragraph">- Le niveau de problème du ticket est <b class="green">Classique</b> et le type de problème est <b class="green">Devenir Auteur</b></p>
+                        <p class="article-content-paragraph">- La description est la suivante (Cliquez sur le texte pour le copier):</p>
+                        <% userInfo.map(user => { %>
+                        <textarea class="autoresizing textarea minh-minw-form" id="description-author-ticket" placeholder="Veuillez copier-coller le message par défaut et ne rien modifier" name="copy-text" maxlength="1000">Bonjour, je souhaiterai devenir auteur. 
+En ouvrant ce ticket, j'accepte les règles et contraintes qu'impliquent le rôle Auteur en plus des règles appliquées et appliquables aux utilisateurs et me tiendrait au courant des modifications qui peuvent être appliquées aux différents règlements du site et les accepteraient.
+                                                        
+Surnom: <%= user.firstname %> <%= user.lastname %>
+Pseudonyme: <%= user.pseudonyme %>
+Rôle actuel: <%= user.role %>
+Status: <%= user.status %><% user.dates.map(date => { %>
+<%= date.title %>: <%= date.date %><% }); %>
+                                                        
+Après validation, ce ticket sera archivé et servira de preuve en cas d'un problème impliquant ma personne et, dans une certaine mesure, le site project1.com.
+Je pourrais à tout moment, accéder à ce ticket et faire une capture d'écran de ce dernier.</textarea><% }); %>
+                    </div>
+                </fieldset>
+            </article>
+        </div>
+    </section>
+</main>
+<script defer src="/js/copyClipboard.js"></script>
+
+<%- include('../partials/footer') %>

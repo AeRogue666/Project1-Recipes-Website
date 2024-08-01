@@ -1,0 +1,88 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('burger') %>
+    <% for (const user of Object.values(profileInfoList)) { %>
+    <form class="top-section" action="/panel/profile/update" method="post">
+        <legend>Espace publique</legend>
+        <div class="top-section-wrapper webkit">
+            <fieldset class="left-section">
+                <div class="profile-container-image no-border">
+                    <img class="profile-img imgsquared250x250" src="<%= user.avatar %>" alt="Photo de profil de <%= user.firstname %> <%= user.lastname %>">
+                    <button class="edit-btn edit-btn-img" type="submit" aria-label="EditPhoto" name="value" value="profimg"><i class="fa-solid fa-plus fa-xl"></i></button>
+                </div>
+            </fieldset>
+            <fieldset class="right-section">
+                <div class="profile-container">
+                    <div class="profile-info">
+                        <p class="prefix">Surnom</p>
+                        <p class="profile-firstname"><%= user.firstname %> <%= user.lastname %></p>
+                        <button class="edit-btn" type="submit" aria-label="EditSurname" name="value" value="surname"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                    </div>
+                    <div class="profile-info">
+                        <p class="prefix">ID</p>
+                        <p class="profile-pseudo"><%= user.pseudonyme %></p>
+                        <button class="not-editable" type="button" title="Can't be edited" aria-label="This value can't be edited"><i class="fa-solid fa-circle-exclamation fa-xl"></i></button>
+                    </div>
+                    <% roleInfo.map(role => { %>
+                    <div class="profile-info">
+                        <p class="prefix">Rôle</p>
+                        <p class="profile-role <%= role.color %>"><%= role.name %></p>
+                        <button class="not-editable" type="button" title="Can't be edited" aria-label="This value can't be edited"><i class="fa-solid fa-circle-exclamation fa-xl"></i></button>
+                    </div>
+                    <% }); %>
+                </div>
+            </fieldset>
+        </div>
+        <fieldset class="center-section">
+            <div class="profile-container">
+                <legend>Description</legend>
+                <div class="profile-info">
+                    <p><%= user.description %></p>
+                    <button class="edit-btn" type="submit" aria-label="EditDescription" name="value" value="description"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <form class="middle-section" action="/panel/profile/update" method="post">
+        <legend>Espace privé</legend>
+        <fieldset class="center-section">
+            <div class="profile-container">
+                <div class="profile-info">
+                    <p class="prefix">Email</p>
+                    <p class="profile-data"><%= user.email %></p>
+                    <button class="edit-btn" type="submit" aria-label="EditEmail" name="value" value="email"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                </div>
+                <div class="profile-info">
+                    <p class="prefix">Mot de passe</p>
+                    <p class="profile-data"><%= user.password %></p>
+                    <button class="edit-btn" type="submit" aria-label="EditPassword" name="value" value="resetpwd"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                </div>
+                <div class="profile-info">
+                    <p class="prefix">Date de publication</p>
+                    <p class="profile-data"><%= user.date_published %></p>
+                    <button class="not-editable" type="button" title="Can't be edited" aria-label="This value can't be edited"><i class="fa-solid fa-circle-exclamation fa-xl"></i></button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <% }; %>
+    <form class="bottom-section" accept="/panel/profile" method="post">
+        <legend id="favrecipes">Recettes favorites</legend>
+        <fieldset class="left-section">
+            <div class="articles-container flexdir-row">
+                <% for (const recipe of Object.values(Recipes)) { %>
+                <a href="/recipe/<%= recipe.id %>">
+                    <article class="article-content no-minwminh profile-favorites">
+                        <img class="img210x160" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                        <h5 class="article-content-title profile-favorites-title"><%= recipe.title %></h5>
+                        <button class="edit-btn edit-btn-recipe profile-favorites-btn" type="submit" aria-label="Remove Recipe from favorites list" name="recipe" value="<%= recipe.id %>"><i class="fa-solid fa-xmark fa-xl"></i></button>
+                    </article>
+                </a>
+                <% }; %>
+            </div>
+        </fieldset>
+    </form>
+</main>
+
+<%- include('../partials/footer') %>

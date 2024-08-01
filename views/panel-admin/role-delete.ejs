@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <form class="top-section" action="" method="post">
+        <h3><%= title %></h3>
+        <% for (const role of Object.values(roleInfo)) { %>
+        <fieldset class="left-section">
+            <div class="width100">
+                <p>Le rôle qui va être supprimé: </p>
+                <legend class="<%= role.color %>"><i class="fa-solid fa-<%= role.icon %>"></i> <%= role.name %></legend>
+                <p>Êtes-vous sur de vouloir supprimer ce rôle ?</p>
+                <p></p>
+            </div>
+        </fieldset>
+        <fieldset class="right-section flexdir-row">
+            <button class="manager-article-btn a-ccess" id="delete-role-btn" type="submit" name="deleterolebtn" value="deleterole"><i class="fa-solid fa-trash"> Supprimer</i></button>
+            <a class="manager-article-btn a-ccess" id="cancel-action-btn" type="button" href="/panel/admin/roles-list/"><i class="fa-solid fa-xmark"> Annuler</i></a>
+        </fieldset>
+        <% }; %>
+    </form>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('burger') %>
+    <section class="top-section">
+        <% if(userStatusValue[0].status == 'active') { %>
+            <% if(userBtn.length !== 0 || authorBtn.length !== 0 || adminBtn.length !== 0) { %>
+            <section class="left-section no-margin">
+                <div class="articles-container width100">
+                    <div class="article-content mobile-width section-border">
+                        <h3 class="title">Votre panel</h3>
+                        <% for (const user of Object.values(userBtn)) { %>
+                        <a class="a-ccess bg-yellow" href="<%= user.url %>"><i class="fa-solid fa-<%= user.icon %> fa-xl"></i><p class="article-content-paragraph"><%= user.title %></p></a>
+                        <% }; %>
+                        <% for (const author of Object.values(authorBtn)) { %>
+                        <a class="a-ccess bg-skyblue" href="<%= author.url %>"><i class="fa-solid fa-<%= author.icon %> fa-xl"></i><p class="article-content-paragraph"><%= author.title %></p></a>
+                        <% }; %>
+                        <% for (const admin of Object.values(adminBtn)) { %>
+                        <a class="a-ccess bg-redorange" href="<%= admin.url %>"><i class="fa-solid fa-<%= admin.icon %> fa-xl"></i><p class="article-content-paragraph"><%= admin.title %></p></a>
+                        <% }; %>
+                    </div>
+                </div>
+            </section>
+            <% }; %>
+        <% } else { %>
+            
+            <% userStatusValue.map(user => { %>
+            <section class="left-section no-margin">
+                <div class="articles-container width100">
+                    <article class="article-content mobile-width">
+                        <legend class="article-title <%= user.color %>"><%= user.value %></legend>
+                        <div class="article-content mobile-width section-border">
+                            <p class="article-content-title">Instructions</p>
+                            <div class="article-content-body flexdir-col flexdir-col-desktop">
+                                <p class="article-content-paragraph"><%= user.message %></p>
+                                <% if(user.status === 'archived') { %>
+                                    <a class="a-ccess bg-<%= user.color %>" href="/panel/profile"><i class="fa-solid fa-user fa-xl"></i><p class="article-content-paragraph">Accéder au profil</p></a>
+                                <% } %>
+                                <a class="a-ccess bg-<%= user.color %>" href="/logout"><i class="fa-solid fa-exit fa-xl"></i><p class="article-content-paragraph">Se déconnecter</p></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <% }); %>
+        <% }; %>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

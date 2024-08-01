@@ -1,0 +1,57 @@
+<%- include('partials/header') %>
+
+<main class="minheight-unset">
+        <section class="top-section flexdir-row no-bbb">
+            <div class="left-section">
+                <div class="articles-container">
+                    <h1 class="nf-title">404</h1>
+                    <h2 class="nf-subtitle"><%= title %></h2>
+                </div>
+                <div class="articles-container" id="nflinkscreen">
+                    <p>Il semblerait que vous vous soyez perdu dans l'espace.</p>
+                    <p>Prenez un moment pour réfléchir, faire une séance de méditation ou vous pouvez aussi cliquez sur</p>
+                    <div class="article-content">
+                        <a class="a-ccess" href="/recipes">La liste des recettes</a>
+                        <a class="a-ccess" href="/contact">La page de contact</a></li>
+                        <a class="a-ccess" href="/legalmentions">Les mentions légales</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-section">
+                <div class="articles-container width100">
+                    <img class="cosmonaut" src="/img/astronaut_yoga_1.png" alt="Image d'un astronaute faisant du yoga">
+                </div>
+            </div>
+        </section>
+        <section class="bottom-section no-bbb">
+            <section class="left-section">
+                <div class="articles-container invisible" id="nflinkphone">
+                    <p>Il semblerait que vous vous soyez perdu dans l'espace.</p>
+                    <p>Prenez un moment pour réfléchir, faire une séance de méditation ou vous pouvez aussi cliquez sur</p>
+                    <div class="article-content">
+                        <a class="a-ccess" href="/recipes">La liste des recettes</a>
+                        <a class="a-ccess" href="/contact">La page de contact</a></li>
+                        <a class="a-ccess" href="/legalmentions">Les mentions légales</a>
+                    </div>
+                </div>
+                <div class="articles-container">
+                    <p>ou sinon sur nos</p>
+                    <h3 class="article-title">Dernières recettes publiées</h3>
+                    <div class="articles-container flexdir-row">
+                        <% for(const recipe of Object.values(LatestRecipes)) { %>
+                            <a href="/recipe/<%= recipe.id %>">
+                                <article class="article-content">
+                                    <img class="img210x160" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                                    <h5 class="article-content-title"><%= recipe.title %></h5>
+                                    <p class="article-content-paragraph"><%= recipe.description %></p>
+                                </article>
+                            </a>
+                            <% }; %>
+                    </div>
+                </div>
+            </section>
+        </section>
+</main>
+<script defer src="/js/nfHamburger.js"></script>
+
+<%- include('partials/footer') %>

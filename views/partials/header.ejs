@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta description="Site internet de recettes de cuisine">
+    <meta name="description" content="Site internet de recettes de cuisine">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" defer href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script defer src="/js/hamburger.js"></script>
+</head>
+<body>
+    <header>
+            <!-- Hamburger + Logo -->
+            <section class="nav-start">
+                <button class="nav-burger" id="navburgerbtn" name="nav-burger-btn" alt="Bouton pour accéder au menu du site" aria-label="Menu de navigation"><i class="fa-solid fa-bars fa-xl"></i></button>
+                <a class="header-logo" href="/"><img class="img160x90" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Aspect_ratio_-_16x9.svg/640px-Aspect_ratio_-_16x9.svg.png" alt="Logo du site" aria-label="Logo du site"></a>
+                <ul class="navbar-menu">
+                    <li>
+                        <a class="nav-a a-ccess" href="/" aria-label="Page d'accueil">Accueil</a>
+                    </li>
+                    <li>
+                        <a class="nav-a a-ccess" href="/recipes" aria-label="Page des recettes">Recettes</a>
+                    </li>
+                    <li>
+                        <a class="nav-a a-ccess" href="/contact" aria-label="Page de contact">Contact</a>
+                    </li>
+                </ul>
+            </section>
+            <!-- Barre de navigation -->
+            <section class="nav-center">
+                <div class="search-container">
+                    <form class="search-form" role="search" id="searchform" action="/recipes" method="get">
+                        <input id="search" type="search" name="search" placeholder="Rechercher une recette">
+                        <label for="search" class="search-label">
+                            <i class="fas fa-search search-icon fa-xl"></i>
+                        </label>
+                    </form>
+                </div>
+            </section>
+            <section class="nav-end">
+                <!-- Profil -->
+                 <% if(userHeaderProfile.length !== 0) { %>
+                     <% userHeaderProfile.map(user => { %>
+                        <button class="nav-end-button" id="panelbtn">
+                            <img class="img-header" style="width: 48px; height: 48px;" src="<%= user.avatar %>" alt="Accéder au profil de <%= user.firstname %> <%= user.lastname %>" aria-label="Profile-image-user">
+                        </button>
+                    <% }); %>
+                <% } else { %>
+                    <a class="nav-a a-ccess" href="/login" aria-label="Page de connexion">Se connecter</a>
+                <% } %>
+            </section>
+            <div class="menu-container" id="menu-container">
+                <ul class="menu-nav-a">
+                    <li>
+                        <a class="tag-link a-ccess" href="/" aria-label="Page d'accueil">Accueil</a>
+                    </li>
+                    <li>
+                        <a class="tag-link a-ccess" href="/recipes" aria-label="Page des recettes">Recettes</a>
+                    </li>
+                    <li>
+                        <a class="tag-link a-ccess" href="/contact" aria-label="Page de contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <% if(userHeaderProfile.length !== 0) { %>
+                <% userHeaderProfile.map(user => { %>
+                    <div class="paneluser-container" id="paneluser-container">
+                        <section class="top-section top-burger">
+                            <div class="articles-container">
+                                <div class="article-content">
+                                    <div class="left-section">
+                                        <div class="nav-end-button">
+                                            <img class="img-header" style="width: 48px; height: 48px;" src="<%= user.avatar %>" alt="Accéder au profil de <%= user.firstname %> <%= user.lastname %>" aria-label="Profile-menu-user">
+                                        </div>
+                                        <h3 class="title title90"><%= user.firstname %> <%= user.lastname %></h3>
+                                    </div>
+                                    <div class="right-section">
+                                        <a class="a-ccess bg-redorange" href="/panel" aria-label="Accéder au panel">
+                                            <i class="fa-solid fa-user fa-xl"></i>
+                                            <p class="article-content-paragraph">Espace Utilisateur</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="bottom-section burger-footer">
+                            <section class="footer-cr width100">
+                                <a class="a-ccess bg-redorange" href="/logout" aria-label="Se déconnecter">Déconnexion</a>
+                            </section>
+                        </section>
+                    </div>
+                <% }); %>
+            <% } %>
+    </header>

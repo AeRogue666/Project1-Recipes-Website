@@ -1,0 +1,52 @@
+<% if(userStatusValue && userStatusValue[0].status == 'active' || userStatusValue && userStatusValue[0].status == 'archived') { %>
+<div class="burger-section">
+    <% if(userBtn.length !== 0 || authorBtn.length !== 0 || adminBtn.length !== 0) { %>
+    <!-- Burger pour le menu du panel -->
+    <button class="panel-burger" name="panel-burger" id="panelburger" aria-label="Bouton pour accéder au menu du panel">
+        <i class="fa-solid fa-bars fa-xl" id="iconpanelburger"></i>
+    </button>
+    <aside class="burger-container" id="burgercontainer">
+        <div class="top-section top-burger">
+            <div class="articles-container width100">
+                <div class="article-content width100">
+                    <h3 class="title title90">Votre panel</h3>
+                    <% for (const user of Object.values(userBtn)) { %>
+                    <a class="a-ccess bg-yellow" href="<%= user.url %>"><i class="fa-solid fa-<%= user.icon %> fa-xl"></i><p class="article-content-paragraph"><%= user.title %></p></a>
+                    <% }; %>
+                    <% for (const author of Object.values(authorBtn)) { %>
+                    <a class="a-ccess bg-skyblue" href="<%= author.url %>"><i class="fa-solid fa-<%= author.icon %> fa-xl"></i><p class="article-content-paragraph"><%= author.title %></p></a>
+                    <% }; %>
+                    <% for (const admin of Object.values(adminBtn)) { %>
+                    <a class="a-ccess bg-redorange" href="<%= admin.url %>"><i class="fa-solid fa-<%= admin.icon %> fa-xl"></i><p class="article-content-paragraph"><%= admin.title %></p></a>
+                    <% }; %>
+                </div>
+            </div>
+        </div>
+        <div class="burger-footer bg-orange">
+            <section class="footer-cr">
+                <p>Copyright 2023-2030 - Site réalisé avec <i class="fa-solid fa-heart" aria-hidden="true"></i> par AurelDev</p>
+            </section>
+        </div>
+    </aside>
+    <!-- Burger pour le menu de gestion des interfaces -->
+    <button class="manager-burger" id="managerburgerbtn" name="manager-burger-btn" aria-label="Menu de gestion">
+        <i class="fa-solid fa-chevron-down" id="iconmanager"></i>
+    </button>
+
+    <div class="manager-container" id="managerburger">
+        <div class="top-section top-burger">
+            <div class="articles-container width100">
+                <div class="article-content width100">
+                    <h3 class="title title90"><%= title %></h3>
+                    <% for (const recipe of Object.values(managerBtnList)) { %>
+                    <a class="a-ccess bg-orange" href="<%= recipe.url %>"><i class="fa-solid fa-<%= recipe.icon %> fa-xl"></i><p class="article-content-paragraph"><%= recipe.title %></p></a>
+                    <% }; %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% }; %>
+</div>
+<% }; %>
+<div class="blury" id="panelBluryWrapper"></div>
+<div class="blury notblury" id="managerBluryWrapper"></div>

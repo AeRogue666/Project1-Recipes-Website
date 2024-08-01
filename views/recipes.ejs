@@ -1,0 +1,169 @@
+<%- include('partials/header') %>
+
+<main>
+    <section class="top-section">
+        <section class="left-section flexdir borderlightgray">
+            <button class="filter-tags" id="btnfilter" name="recipes-filter-btn" aria-label="category-menu"><i class="fa-solid fa-bars fa-xl"></i></button>
+            <form class="list-tags" action="" method="post" id="formtags">
+                <ul class="list-tags">
+                    <% categoryList.map(tag => { %>
+                        <li class="one-tag">
+                            <button class="tag-btn" type="submit" name="tag" value="<%= tag.id %>"><i class="fa-solid fa-times fa-xl"></i><p class="tag-name"><%= tag.title %></p></button>
+                        </li>
+                    <% }); %>
+                </ul>
+            </form>
+            <div class="sort-container" id="sort-container">
+                <form class="sort-content" action="" method="post" id="sortcontent">
+                    <select class="sort-selector" name="sort" id="sort-select" aria-label="sort-selector">
+                        <% for (const dropdown of Object.values(sortDropdown)) { %>
+                            <option class="sort-btn author-name" value="">Trier par : <%= dropdown.title %></option>
+                        <% }; %>
+                        <% for (const sort of Object.values(sortList)) { %>
+                            <option class="sort-btn" value="<%= sort.id %>"><%= sort.title %></option>
+                        <% }; %>
+                    </select>
+                    <button class="sort-btn" type="submit" name="sort" aria-label="Bouton de validation du tri"><i class="fa-solid fa-check fa-xl green"></i></button>
+                </form>
+            </div>
+        </section>
+        <form class="middle-section ctg-content" id="formcategoriesinput" action="/recipes" method="POST"> <!-- onsubmit="event.preventDefault()" -->
+            <fieldset class="left-section">
+                <button class="ctg-btn-form width75" type="submit" name="resetbtn" value="resetbtn" id="resetbtn">Déselectionner les catégories</button>
+                <button class="ctg-btn-form width75" type="submit" id="submitbtn">Trier</button>
+            </fieldset>
+            <fieldset class="right-section minw-minh-inherit">
+                <div class="ctg">
+                    <h3 class="ctg-title">Type de recettes</h3>
+                    <ul class="ctg-body">
+                        <% MenuType.forEach(category => {%>
+                            <% if(category.checked) { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>" checked><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } else { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="ctg">
+                    <h3 class="ctg-title">Boulangerie</h3>
+                    <ul class="ctg-body">
+                        <% BakeryType.forEach(category => {%>
+                            <% if(category.checked) { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>" checked><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } else { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="ctg">
+                    <h3 class="ctg-title">Pâtisserie & Viennoiserie</h3>
+                    <ul class="ctg-body">
+                        <% PastryType.forEach(category => {%>
+                            <% if(category.checked) { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>" checked><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } else { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="ctg">
+                    <h3 class="ctg-title">Type de pâtes</h3>
+                    <ul class="ctg-body">
+                        <% DoughType.forEach(category => {%>
+                            <% if(category.checked) { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>" checked><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } else { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="ctg">
+                    <h3 class="ctg-title">Autre catégories</h3>
+                    <ul class="ctg-body">
+                        <% OtherType.forEach(category => {%>
+                            <% if(category.checked) { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>" checked><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } else { %>
+                                <li>
+                                    <label class="ctg-label" for="input-<%= category.id %>" id="<%= category.id %>_text">
+                                        <input class="ctg-btn" type="checkbox" name="input" id="input-<%= category.id %>" value="<%= category.id %>"><%= category.title %></input>
+                                    </label>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                    </ul>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+    <section class="bottom-section">
+        <div class="grid-container-3 flexdir-row">
+            <% Recipes.forEach(recipe => {%>
+            <a href="/recipe/<%= recipe.id %>">
+                <!-- <article class="article-content">
+                    <img class="img320x180" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                    <h3 class="article-content-title"><%= recipe.title %></h3>
+                    <p class="article-content-paragraph"><%= recipe.description %></p>
+                </article> -->
+                
+                <article class="articles-container">
+                    <div class="article-content minh20rem">
+                        <img class="img320x180" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                        <h3 class="article-content-title"><%= recipe.title %></h3>
+                        <p class="article-content-paragraph"><%= recipe.description %></p>
+                    </div>
+                    <div class="opened flexdir-col flexdir-col-desktop width100">
+                        <div class="recipe-viewbar-content flexdir-row margin1remauto">
+                            <p class="article-content-paragraph font-small marginauto1rem"><%= recipe.favorites %> <i class="fa-solid fa-eye"></i></p>
+                            <p class="article-content-paragraph margin-recipe">Publiée le <%= recipe.date_published %> par <b class="font-small"><%= recipe.name %></b></p>
+                        </div>
+                    </div>
+                </article>
+            </a>
+            <% }); %>
+        </div>
+    </section>
+</main>
+<div id="bluryWrapper" class="blury"></div>
+
+<%- include('partials/footer') %>

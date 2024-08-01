@@ -1,0 +1,72 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('burger') %>
+    <form class="top-section" action="" method="post">
+        <h3><%= title %></h3>
+        <% ticketInfos.map(ticket => { %>
+        <fieldset class="left-section">
+            <article class="article-content no-maxwmaxh width100">
+                <p>Le ticket qui va être supprimé :</p>
+                <div class="ticket-container borderlightgray">
+                    <ul class="ticket-subcontainer flexdir-col">
+                        <li class="article-content-li widthauto">
+                            <p class="article-content-paragraph no-margin ticketid">#<%= ticket.id %></p>
+                        </li>
+                        <li class="article-content-li widthauto">
+                            <legend class="article-content-title no-margin"><%= ticket.title %></legend>
+                        </li>
+                    </ul>
+                    <p class="prefix prefix-title">Créé par</p>
+                    <a class="ticket-info" href="/profile/<%= ticket.pseudonyme %>" target="_blank">
+                        <div class="recipe-authorbar no-border">
+                            <div class="authorbar-image">
+                                <img class="profile-img" href="<%= ticket.image %>">
+                            </div>
+                            <div class="authorbar-info">
+                                <p class="author-name profile-pseudo"><%= ticket.firstname %> <%= ticket.lastname %></p>
+                                <p class="author-role profile-role <%= ticket.color %>"><%= ticket.role %></p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="ticket-list flexdir-col">
+                        <div class="ticket-info margin1rem">
+                            <p class="prefix prefix-title">Dates</p>
+                            <% if(ticket.dateCreated) { %>
+                                <p class="ticket-info-paragraph recipe-date publish-date">Publié le <%= ticket.dateCreated %></p>
+                            <% } else { %>
+                                <p class="ticket-info-paragraph recipe-date publish-date">N'a pas été publié</p>
+                            <% } %>
+                            <% if(ticket.dateArchived) { %>
+                                <p class="ticket-info-paragraph recipe-date publish-date">Archivé le <%= ticket.dateArchived %></p>
+                                <% } else { %>
+                                    <p class="ticket-info-paragraph recipe-date publish-date">N'a pas été archivé</p>
+                                <% } %>
+                            <% if(ticket.dateCancelled) { %>
+                                <p class="ticket-info-paragraph recipe-date publish-date">Rejeté le <%= ticket.dateCancelled %></p>
+                                <% } else { %>
+                                    <p class="ticket-info-paragraph recipe-date publish-date">N'a pas été rejeté</p>
+                                <% } %>
+                        </div>
+                    </div>
+                    <ul class="ticket-subcontainer">
+                        <% ticket.data.map(value => { %>
+                            <li class="article-content-li widthauto">
+                                <p class="prefix prefix-title margin03rem"><%= value.title %></p>
+                                <p class="ticket-status-paragraph <%= value.color %>"><%= value.infotitle %></p>
+                            </li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <p>Êtes-vous sur de vouloir supprimer ce ticket ?</p>
+            </article>
+        </fieldset>
+        <fieldset class="right-section flexdir-row">
+            <button class="manager-article-btn a-ccess focused-btn" id="delete-ticket-btn" type="submit" name="deleteticketbtn" value="deleteticket"><i class="fa-solid fa-trash"> Supprimer</i></button>
+            <a class="manager-article-btn a-ccess focused-btn" id="cancel-action-btn" type="button" href="/panel/support/ticket/<%= ticket.id %>"><i class="fa-solid fa-xmark"> Annuler</i></a>
+        </fieldset>
+        <% }); %>
+    </form>
+</main>
+
+<%- include('../partials/footer') %>

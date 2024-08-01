@@ -1,0 +1,128 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <% if(rolesValueNewList[0].error) { %>
+        <section class="top-section">
+            <article class="left-section">
+            <% rolesValueNewList.map((form,i) => { %>
+                <legend class="title <%= form.color %>"><%= form.error %></legend>
+                <div class="articles-container">
+                    <div class="article-content">
+                        <% form.data.map(content => { %>
+                            <p class="collection-title"><%= content.content %></p>
+                            <p class="collection-title <%= form.color %>"><i class="fa-solid fa-<%= content.icon %>"></i> <%= content.role %></p>
+                        <% }); %>
+                        <a class="a-ccess bg-<%= form.color %>" href="/panel/admin/roles-list"><i class="fa-solid fa-arrow-left"></i>Revenir sur la page des rôles</a>
+                    </div>
+                </div>
+            <% }); %>
+            </article>
+        </section>
+    <% } else { %>
+    <form class="top-section" action="" method="post">
+        <legend class="title"><%= title %> : <p class="<%= roleFormType[2].value %>"><i class="fa-solid fa-<%= roleFormType[1].value %>"></i> <%= roleFormType[0].value %></p></legend>
+        <fieldset class="left-section margin1rem">
+            <% for (const form of Object.values(roleFormType)) { %>
+            <label class="label-form" for="input-<%= form.id %>">
+                <h3><%= form.title %></h3>
+                <p>(<%= form.subtitle %>)</p>
+                <input class="label-form-input" id="input-<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" value="<%= form.value %>" autocomplete="off" autocapitalize="off">
+            </label>
+            <% }; %>
+        </fieldset>
+        <fieldset class="center-section">
+            <div class="articles-container flexdir-row width100">
+                <button class="update-btn-form ctg-btn-form" id="permsbtn" type="button">Permissions</button>
+                <button class="update-btn-form ctg-btn-form" id="usersbtn" type="button">Utilisateurs</button>
+            </div>
+            <article class="article-inputs borderlightgray" id="permsarticle">
+            <% rolesValueNewList.map((form,i) => { %>
+                <legend class="article-inputs-title"><%= form.title %></legend>
+                <div class="articles-container">
+                <% form.data.map(collection => { %>
+                    <div class="article-content">
+                        <h3 class="article-content-title collection-title"><%= collection.title %></h3>
+                        <p class="prefix widthauto text-center"><%= collection.subtitle %></p>
+                        <% collection.data.map(perm => { %>
+                            <div class="inputs-container">
+                                <p class="inputs-container-paragraph"><%= perm.title %></p>
+                                <% perm.data.map(input => { %>
+                                    <% if(input.checkedValue) { %>
+                                    <label class="label-form-role" for="input-<%= input.name %>-<%= input.value %>">
+                                        <p><%= input.title %></p>
+                                        <input class="input-form-role" id="input-<%= input.name %>-<%= input.value %>" type="checkbox" name="<%= input.name %>", value="<%= input.value %>" checked autocomplete="off" autocapitalize="off">
+                                    </label>
+                                    <% } else { %>
+                                    <label class="label-form-role" for="input-<%= input.name %>-<%= input.value %>">
+                                        <p><%= input.title %></p>
+                                        <input class="input-form-role" id="input-<%= input.name %>-<%= input.value %>" type="checkbox" name="<%= input.name %>", value="<%= input.value %>" autocomplete="off" autocapitalize="off">
+                                    </label>
+                                    <% } %>
+                                <% }); %>
+                            </div>
+                        <% }); %>
+                        </div>
+                    <% }); %>
+                    </div>
+            <% }); %>
+            </article>
+        </fieldset>
+        <fieldset class="right-section margin1rem">
+            <button class="update-btn-form ctg-btn-form" type="submit" name="submit-update-role" id="submitupdaterole">Envoyer</button>
+            <a class="ctg-btn-form profile-deletebtn" id="deleterolebtn" name="deleterolebtn" type="button" href="/panel/admin/roles-list/delete/<%= roleFormType[0].value %>">Supprimer le rôle</a>
+        </fieldset>
+    </form>
+    
+    <form class="bottom-section article-inputs flexdir-row" action="" method="post" id="usersarticle">
+        <fieldset class="left-section articles-container borderlightgray">
+            <article class="width100">
+                <legend class="article-title">Ayant le rôle</legend>
+                <label class="search-user-form justify-center" for="input-searchaddeduser">
+                    <input class="search-user-input" id="input-searchaddeduser" type="search" name="searchaddeduser" placeholder="Rechercher un utilisateur" autocomplete="off" autocapitalize="off">
+                </label>
+                <div class="article-content no-maxwmaxh">
+                    <% roleFormUsers.map(user => { %>
+                    <button class="ctg-btn-form btn-form-role no-border" id="input-<%= user.id %>" type="submit" name="useradded" value="<%= user.pseudonyme %>" autocomplete="off" autocapitalize="off">
+                        <div class="authorbar-image">
+                            <img class="profile-img" src="<%= user.image %>">
+                        </div>
+                        <div class="authorbar-info">
+                            <p class="author-name"><%= user.firstname %> <%= user.lastname %></p>
+                            <% if(user.pseudonyme) { %>
+                                <p class="prefix-role"><%= user.pseudonyme %></p>
+                            <% } %>
+                            <p class="prefix-role <%= user.color %>"><%= user.role %></p>
+                        </div>
+                    </button>
+                    <% }); %>
+                </div>
+            </article>
+        </fieldset>
+        <fieldset class="right-section articles-container borderlightgray">
+            <article class="width100">
+                <legend class="article-title">Tous les utilisateurs</legend>
+                <label class="search-user-form justify-center" for="input-searchalluser">
+                    <input class="search-user-input" id="input-searchalluser" type="search" name="searchalluser" placeholder="Rechercher un utilisateur" autocomplete="off" autocapitalize="off">
+                </label>
+                <div class="article-content no-maxwmaxh">
+                    <% roleFormUsersList.map(user => { %>
+                    <button class="ctg-btn-form btn-form-role no-border" id="input-<%= user.id %>" type="submit" name="alluserslist" value="<%= user.pseudonyme %>" autocomplete="off" autocapitalize="off">
+                        <div class="authorbar-image">
+                            <img class="profile-img" src="<%= user.image %>">
+                        </div>
+                        <div class="authorbar-info">
+                            <p class="author-name"><%= user.firstname %> <%= user.lastname %></p>
+                            <% if(user.pseudonyme) { %><p class="prefix-role"><%= user.pseudonyme %></p><% } %>
+                            <p class="prefix-role <%= user.color %>"><%= user.role %></p>
+                        </div>
+                    </button>
+                    <% }); %>
+                </div>
+            </article>
+        </fieldset>
+    </form>
+    <% } %>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<main>
+    <section class="main-section">
+        <%- include('burger') %>
+        <form class="top-section" action="/panel/profile/update" method="post">
+            <legend>Modifier les informations</legend>
+            <fieldset class="left-section">
+                <% for (const form of Object.values(formValue)) {%>
+                <label class="label-form" for="input-<%= form.id %>">
+                    <p><%= form.title %></p>
+                    <p><%= form.subtitle %></p>
+                    <input class="label-form-input" id="input-<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" value="" autocomplete="off" autocapitalize="off">
+                </label>
+                <% }; %>
+                <% for (const form of Object.values(formDescValue)) { %>
+                <label class="label-form" for="input-<%= form.id %>">
+                    <p><%= form.title %></p>
+                    <textarea class="autoresizing textarea minh-minw-form" id="input-<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" maxlength="1000" autocomplete="off" autocapitalize="off" autofocus><%= form.value %></textarea>
+                </label>
+                <% }; %>
+                <% for (const form of Object.values(formImgValue)) { %>
+                <label class="label-form" for="input-<%= form.id %>">
+                    <p><%= form.title %></p>
+                    <input class="label-form-input" id="input-<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" pattern="<%= form.pattern %>" autocomplete="off" autocapitalize="off" autofocus>
+                </label>
+                <% }; %>
+            </fieldset>
+            <fieldset class="right-section flexdir-row">
+                <button class="update-btn-form ctg-btn-form" type="reset">Effacer</button>
+                <button class="update-btn-form ctg-btn-form" type="submit">Envoyer</button>
+            </fieldset>
+        </form>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

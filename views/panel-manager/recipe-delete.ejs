@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <form class="top-section" action="" method="post">
+        <h3><%= title %></h3>
+        <% for (const recipe of Object.values(Recipes)) { %>
+        <fieldset class="left-section">
+            <div class="recipes-border width100">
+                <p>La recette qui va être supprimée :</p>
+                <legend><%= recipe.title %></legend>
+                <img class="img210x160 margin1rem" src="<%= recipe.image %>" id="imgrecipe-<%= recipe.id %>" alt="<%= recipe.imageDescription %>" href="<%= recipe.labelURL %>" aria-label="<%= recipe.labelDescription %>">
+                <p>Etes-vous sur de vouloir supprimer cette recette pour l'éternité ?</p>
+                <p>(Parce que c'est long l'éternité, surtout vers la fin...)</p>
+            </div>
+        </fieldset>
+        <fieldset class="right-section flexdir-row">
+            <button class="ctg-btn-form manager-article-btn" id="delete-recipe-btn" type="submit" name="deleterecipe" value="<%= recipe.id %>"><i class="fa-solid fa-trash"></i> Supprimer</button>
+            <a class="ctg-btn-form manager-article-btn" id="cancel-action-btn" href="/panel/manager/recipes-list"><i class="fa-solid fa-xmark"></i> Annuler</a>
+        </fieldset>
+        <% }; %>
+    </form>
+</main>
+
+<%- include('../partials/footer') %>

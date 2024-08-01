@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<main>
+    <section class="top-section">
+        <section class="left-section">
+            <div class="login-title">
+                <h1><%= title %></h1>
+            </div>
+            <div class="login-container">
+                <form class="login-form" id="loginform" action="/login" method="post" autocomplete="off">
+                    <label for="input-email">Email
+                        <input class="login-input" type="email" name="email" id="input-email" autocomplete="off" aria-placeholder="Votre adresse mail">
+                        <div class="invisible" id="divmail">
+                             <p class="invalid" id="mailvalid">L'adresse mail n'est pas valide</p>
+                        </div>
+                    </label>
+                    <label for="input-pwd">Mot de passe
+                        <input class="login-input" type="password" name="pwd" id="input-pwd" title="Must contain at least one number and one uppercase and lowercase letter, and at least 12 or more characters" autocomplete="off" aria-placeholder="Votre mot de passe">
+                        <div class="invalid-pwd-container" id="invalidpwd">
+                            <p class="invalid" id="pwdvalidator">Un mot de passe doit avoir entre <b>16</b> et <b>34</b> caractères.</p>
+                        </div>
+                    </label>
+                    <button class="login-btn-form" type="submit" id="loginbtn">Se connecter</button>
+                </form>
+                <div class="login-noaccount">
+                    <p>Pas de compte ?</p>
+                    <a class="login-btn-form register-btn-click" href="/register">Cliquez-ici !</a>
+                </div>
+                <div class="login-error-container invisible">
+                    <% for (const error of Object.values(loginError)) { %>
+                    <p class="invalid" id="error-rs<%=error.id%>"><%= error.reason %></p>
+                    <% }; %>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+<script defer src="/js/validationForm.js"></script>
+<%- include('partials/footer') %>

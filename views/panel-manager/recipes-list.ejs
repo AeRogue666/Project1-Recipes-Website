@@ -1,0 +1,87 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <section class="top-section">
+        <section class="left-section flexdir borderlightgray">
+            <button class="filter-tags" id="manager-filter-btn" name="manager-filter-btn" aria-label="Category-menu"><i class="fa-solid fa-bars fa-xl"></i></button>
+            <form class="list-tags" action="" method="post" id="form-tags">
+                <% for (const tag of Object.values(tagTypeList)) { %>
+                <li class="one-tag">
+                    <button class="tag-btn" type="submit" name="tag" value="<%= tag.value %>">
+                        <p class="tag-name <%= tag.color %>"><i class="fa-solid fa-times fa-xl"></i>  <%= tag.status %></p>
+                    </button>
+                </li>
+                <% }; %>
+            </form>
+            <div class="manager-sort-container" id="sort-container">
+                <form class="sort-content" action="" method="post" id="sortcontent">
+                    <select class="sort-selector" name="sort" id="sort-select" aria-label="sort-selector">
+                        <% for (const dropdown of Object.values(sortDropdown)) { %>
+                            <option class="sort-btn author-name" value="">Trier par : <%= dropdown.title %></option>
+                        <% }; %>
+                        <% for (const sort of Object.values(sortList)) { %>
+                            <option class="sort-btn" value="<%= sort.id %>"><%= sort.title %></option>
+                        <% }; %>
+                    </select>
+                    <button class="sort-btn" type="submit" name="sort" aria-label="Bouton de validation du tri"><i class="fa-solid fa-check fa-xl green"></i></button>
+                </form>
+            </div>
+        </section>
+    </section>
+    <form class="middle-section ctg-content-manager" id="manager-filter-form" action="" method="post">
+        <fieldset class="left-section">
+            <button class="ctg-btn-form width75" type="reset" name="resetbtn" value="resetbtn" id="resetbtn">Déselectionner les catégories</button>
+            <button class="ctg-btn-form width75" type="submit" id="submitbtn">Trier</button>
+        </fieldset>
+        <fieldset class="right-section">
+            <div class="ctg">
+                <h3 class="ctg-title">Status des recettes</h3>
+                <ul class="panel-ctg-body flexdir-col">
+                    <% statusType.map(status => { %>
+                        <% if(status.checked) { %>
+                            <li class="panel-ctg-li <%= status.color %>">
+                                <label class="ctg-label" for="input<%= status.value %>">
+                                    <input class="ctg-btn" type="checkbox" name="input" id="input<%= status.value %>" value="<%= status.value %>" checked><%= status.status %>
+                                </label>
+                            </li>
+                        <% } else { %>
+                            <li class="panel-ctg-li <%= status.color %>">
+                                <label class="ctg-label" for="input<%= status.value %>">
+                                    <input class="ctg-btn" type="checkbox" name="input" id="input<%= status.value %>" value="<%= status.value %>"><%= status.status %>
+                                </label>
+                            </li>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            </div>
+        </fieldset>
+    </form>
+    <section class="bottom-section">
+        <div class="grid-container-5 flexdir-row">
+            <% for (const recipe of Object.values(Recipes)) { %>
+                <article class="article-content">
+                    <div class="left-section margin1rem">
+                        <a id="articlebtn-<%= recipe.id %>" href="/recipe/<%= recipe.id %>" target="_blank">
+                            <div class="margin1rem">
+                                <button class="ctg-title no-bbb no-border margin03rem" id="recipe-status" type="button">Status: <b class="<%= recipe.statuscolor %>"><%= recipe.status %></b></button>
+                            </div>
+                            <img class="img210x160" src="<%= recipe.image %>" id="imgrecipe-<%= recipe.id %>" alt="<%= recipe.imageDescription %>" href="<%= recipe.labelURL %>">
+                            <h3 class="article-content-title"><%= recipe.title %></h3>
+                            <% if(recipe.user) { %>
+                                <p class="prefix text-center width100">Publiée par <%= recipe.user %></p>
+                            <% } %>
+                        </a>
+                    </div>
+                    <div class="right-section">
+                        <a class="ctg-btn-form manager-article-btn" id="updatebtn-<%= recipe.id %>" href="/panel/manager/recipe/update/<%= recipe.id %>"><i class="fa-solid fa-pen"></i> Modifier</a>
+                        <a class="ctg-btn-form manager-article-btn" id="deletebtn-<%= recipe.id %>" href="/panel/manager/recipe/delete/<%= recipe.id %>"><i class="fa-solid fa-trash"></i> Supprimer</a>
+                    </div>
+                </article>
+            <% }; %>
+        </div>
+    </section>
+</main>
+<div class="blury notblury" id="formBluryWrapper"></div>
+
+<%- include('../partials/footer') %>

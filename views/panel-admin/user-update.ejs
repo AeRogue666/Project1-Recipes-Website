@@ -1,0 +1,129 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <% if(!profileInfo[0].message) { %>
+        <% profileInfo.map(user => { %>
+        <section class="top-section">
+            <div class="top-section-wrapper width100">
+                <section class="left-section">
+                    <div class="profile-container no-border">
+                        <img class="imgsquared250x250" src="<%= user.image %>" alt="Photo de profil de <%= user.firstname %> <%= user.lastname %>">
+                    </div>
+                </section>
+                <section class="right-section">
+                    <div class="profile-container width100 height100 minheight-unset minh-minw-form">
+                        <div class="profile-info">
+                            <p class="prefix">Surnom</p>
+                            <p class="profile-firstname"><%= user.firstname %> <%= user.lastname %></p>
+                        </div>
+                        <div class="profile-info">
+                            <p class="prefix">Pseudonyme</p>
+                            <p class="profile-pseudo"><%= user.pseudonyme %></p>
+                        </div>
+                        <div class="profile-info">
+                            <p class="prefix">Email</p>
+                            <p class="profile-email"><%= user.email %></p>
+                        </div>
+                        <div class="profile-subcontainer">
+                            <div class="profile-info justify-start">
+                                <p class="prefix">Rôle</p>
+                                <p class="profile-role margin1remauto <%= user.color %>"> <i class="fa-solid fa-<%= user.icon %>"></i> <%= user.role %></p>
+                            </div>
+                            <div class="profile-info justify-start">
+                                <p class="prefix">Status</p>
+                                <p class="profile-status margin1remauto <%= user.statuscolor %>"> <i class="fa-solid fa-square"></i> <%= user.status %></p>
+                            </div>
+                        </div>
+                        <div class="date-container">
+                            <% profileDateValues.map(date => { %>
+                            <div class="date-info justify-start">
+                                <p class="prefix margin1rem"><%= date.title %></p>
+                                <p class="date-info-text margin1remauto text-center"><%= date.date %></p>
+                            </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                    <div class="profile-container width100 height100 minh-minw-form">
+                        <div class="profile-info width100 height100 flex-col-start minw-minh-inherit">
+                            <p class="prefix">Description</p>
+                            <p class="profile-data"><%= user.description %></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <form class="middle-section flexdir-row borderlightgray" action="" method="post">
+            <fieldset class="left-section status-section">
+                <legend>Modifier le status</legend>
+                <button class="update-status-btn <%= user.statuscolor %>" id="updatestatusbtn" type="button"><%= user.status %></button>
+                <div class="update-status-container" id="updatestatuscontainer">
+                    <ul class="no-margin">
+                        <% userStatusList.map(status => { %>
+                        <li><button class="update-status-btn <%= status.color %>" id="input<%= status.status %>" type="submit" name="status" value="<%= status.status %>"><%= status.value %></button></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </fieldset>
+            <fieldset class="center-section status-section margin03rem">
+                <legend>Modifier le rôle</legend>
+                <button class="update-status-btn <%= user.color %>" id="updaterolebtn" type="button"><i class="fa-solid fa-<%= user.icon %>"></i> <%= user.role %></button>
+                <div class="update-status-container" id="updaterolecontainer">
+                    <ul class="no-margin">
+                        <% rolesList.map(role => { %>
+                        <li><button class="update-status-btn <%= role.color %>" id="input<%= role.name %>" type="submit" name="role" value="<%= role.name %>"><i class="fa-solid fa-<%= role.icon %>"></i> <%= role.name %></button></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </fieldset>
+        </form>
+        <form class="bottom-section borderlightgray" action="" method="post">
+            <fieldset class="left-section flexdir-row">
+                <legend>Modifier les informations</legend>
+                <label class="label-form" for="inputsurname">
+                    <h3>Modifier le surnom</h3>
+                    <input class="label-form-input" id="inputsurname" type="text" name="surname" value="<%= user.firstname %> <%= user.lastname %>" autocomplete="off" autocapitalize="off">
+                </label>
+                <label class="label-form" for="inputpseudonyme">
+                    <h3>Modifier le pseudonyme</h3>
+                    <input class="label-form-input" id="inputpseudonyme" type="text" name="pseudonyme" value="<%= user.pseudonyme %>" autocomplete="off" autocapitalize="off">
+                </label>
+            </fieldset>
+            <fieldset class="center-section">
+                <label class="label-form" for="inputdescription">
+                    <h3>Modifier la description</h3>
+                    <p>(1000 caractères maximum)</p>
+                    <textarea class="autoresizing textarea minh-minw-form" id="inputdescription" name="description" maxlength="1000"><%= user.description %></textarea>
+                </label>
+            </fieldset>
+            <fieldset class="right-section">
+                <label class="label-form" for="inputimg">
+                    <h3>Modifier l'image de profil</h3>
+                    <input class="label-form-input" id="inputimg" type="text" name="image" value="" autocomplete="off" autocapitalize="off">
+                </label>
+            </fieldset>
+            <button class="update-btn-form ctg-btn-form" type="submit" name="submit-new-info" id="submitnewinfo">Envoyer</button>
+            <a class="ctg-btn-form profile-deletebtn" id="deleteuserbtn" name="deleteuserbtn" type="button" href="/panel/admin/users-list/delete/<%= user.pseudonyme %>">Supprimer l'utilisateur</a>
+        </form>
+        <% }); %>
+    <% } else { %>
+        <section class="top-section">
+            <article class="left-section">
+                <% profileInfo.map(user => { %>
+                    <legend class="title <%= user.color %>"><%= user.error %></legend>
+                    <div class="articles-container">
+                        <div class="article-content recipes-border width100">
+                            <p class="collection-title"><%= user.message %></p>
+                            <legend class="legend <%= user.color %>"><%= user.firstname %> <%= user.lastname %> (<%= user.pseudonyme %>)</legend>
+                            <img class="imgsquared250x250 margin1rem" src="<%= user.image %>" id="<imguser-<%= user.pseudonyme %>"> <!-- alt="<%= user.imageDescription %>" -->
+                            <p class="collection-title">Car il est <b class="<%= user.color %>"><i class="fa-solid fa-<%= user.icon %>"></i> <%= user.role %></b></p>
+                            <a class="a-ccess bg-<%= user.color %>" href="/panel/admin/users-list"><i class="fa-solid fa-arrow-left"></i>Revenir sur la page des utilisateurs</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </article>
+        </section>
+    <% } %>
+</main>
+
+<%- include('../partials/footer') %>

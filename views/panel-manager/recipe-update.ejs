@@ -1,0 +1,183 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <% if( adminBtn.length !== 0 || authorBtn.length !== 0 && (statusTypeBtn[0].value == 'draft' || statusTypeBtn[0].value == 'need_edit' )) { %>
+    <form class="top-section" action="" method="post">
+        <legend class="title"><%= title %></legend>
+        <fieldset class="left-section">
+            <div class="ticket-container widthinherit">
+                <ul class="ticket-subcontainer flexdir-col">
+                    <% recipeStatusValue.map(status => { %>
+                        <li class="article-content-li widthauto-mobile">
+                            <p class="ticket-status-paragraph <%= status.color %>"><%= status.status %></p>
+                        </li>
+                    <% }); %>
+                    <% recipeInfo.map(info => { %>
+                        <li class="article-content-li widthauto-mobile">
+                            <h1 class="article-title margin1rem"><%= info.title %></h1>
+                        </li>
+                    <% }); %>
+                        <% recipeStatusValue.map(status => { %>
+                            <% if(status.value == 'need_edit' && status.messageTicketRedirection) { %>
+                                <li class="article-content-li widthauto-mobile">
+                                    <p class="paragraph">Plus d'informations: <a class="ticket-status-paragraph" href="/panel/support/ticket/<%= status.ticket %>">Ticket <%= status.ticket %></a></p>
+                                </li>
+                            <% } %>
+                        <% }); %>
+                </ul>
+                <div class="ticket-subcontainer flexdir-col">
+                    <% recipeInfo.map(info => { %>
+                        <div class="article-content-li widthauto-mobile">
+                            <img class="img210x160" src="<%= info.image %>" alt="<%= info.imageDescription %>" aria-label="<%= info.labelDescription %>" href="<%= info.labelURL %>">
+                        </div>
+                    <% }); %>
+                    </div>
+            </div>
+            <% for (const form of Object.values(recipeFormType)) { %>
+                <label class="label-form" for="input<%= form.id %>">
+                    <h3><%= form.title %></h3>
+                    <input class="label-form-input" id="input<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" value="<%= form.value %>" autocomplete="off" autocapitalize="off">
+                </label>
+            <% }; %>
+            <div class="recipe-counter-content">
+                <legend>Nombre de personnes</legend>
+                <p>Précisez le nombre de personnes pour laquelle votre recette est faite (1-24)</p>
+                <div class="recipe-counter-label">
+                    <button class="recipe-counter-btn" id="data-decrease" type="button" name="people-increase" aria-label="people-increase"><i class="fa-solid fa-minus"></i></button>
+                    <label for="people">
+                        <input class="input-form-role text-center" id="people" name="people" value="<%= peopleNumber %>" type="text" aria-label="peopleNumber">
+                    </label>
+                    <button class="recipe-counter-btn" id="data-increase" type="button" name="people-decrease" aria-label="people-decrease"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="article-content minh-maxh-inherit">
+                    <p class="text-align-left"><b>NOTE: </b> Si votre recette est faite pour plusieurs personnes ne divisez pas le nombre d'ingrédients nécessaires, appuyez sur le <b>+</b> pour ajuster le nombre de personnes.</p>
+                    <p class="text-align-left">Cependant, vous pouvez diviser le nombre d'ingrédients par vous-même, auquel cas, veuillez tout mettre pour <b class="red">1 personne</b>.</p>
+                </div>
+            </div>
+            <% for (const form of Object.values(recipeFormTextarea)) { %>
+                <label class="label-form" for="textarea<%= form.id %>">
+                    <h3><%= form.title %></h3>
+                    <p>(<%= form.maxlength %> caractères maximum)</p>
+                    <textarea class="autoresizing textarea minh-minw-form" id="textarea<%= form.id %>" placeholder="<%= form.placeholder %>" name="<%= form.name %>" maxlength="<%= form.maxlength %>"><%= form.value %></textarea>
+                </label>
+            <% }; %>
+        </fieldset>
+        <fieldset class="center-section margin1rem minh-maxh-inherit">
+            <legend>Sélectionner les catégories</legend>
+            <div class="recipe-ctg-container section-border">
+                <% categoriesList.map(content => { %>
+                    <div class="ctg">
+                        <legend><%= content.title %></legend>
+                        <ul class="ctg-body">
+                            <% content.data.map(category => { %>
+                                <li>
+                                    <% if(category.checked) { %>
+                                        <label class="recipe-ctg-label" for="input-<%= category.id %>">
+                                            <p><%= category.name %></p>
+                                            <input class="ctg-btn" id="input-<%= category.id %>" name="<%= category.name %>" type="checkbox" value="<%= category.value %>" checked autocomplete="off" autocapitalize="off">
+                                        </label>
+                                    <% } else { %>
+                                        <label class="recipe-ctg-label" for="input-<%= category.id %>">
+                                            <p><%= category.name %></p>
+                                            <input class="ctg-btn" id="input-<%= category.id %>" name="<%= category.name %>" type="checkbox" value="<%= category.value %>" autocomplete="off" autocapitalize="off">
+                                        </label>
+                                    <% } %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                <% }); %>
+            </div>
+        </fieldset>
+        <fieldset class="right-section">
+            <button class="update-btn-form ctg-btn-form" type="submit" name="send-updated-recipe">Envoyer</button>
+        </fieldset>
+    </form>
+    <% } else { %>
+    <section class="top-section">
+        <h3><%= title %></h3>
+        <section class="left-section">
+            <% for (const status of Object.values(recipeStatusValue)) { %>
+            <p>Vous ne pouvez pas éditer cette recette car elle est <b class="<%= status.color %>"><%= status.status %></b>.</p>
+            <p>Seules les recettes dont le status est <b class="yellow">En attente</b> ou <b class="orange">A modifier</b> peuvent être modifiées par leur auteur.</p>
+            <% }; %>
+        </section>
+    </section>
+    <% } %>
+    <section class="middle-section">
+        <% for (const authorInfo of Object.values(userValues)) { %>
+        <a class="width75 borderlightgray" href="/profile/<%= authorInfo.pseudonyme %>">
+            <div class="recipe-authorbar no-border">
+                <div class="authorbar-image">
+                    <img class="recipe-authorimg" src="<%= authorInfo.image %>" alt="Accéder au profil de <%= authorInfo.firstname %> <%= authorInfo.lastname %>" aria-label="Author-image">
+                </div>
+                <div class="authorbar-info">
+                    <p class="author-name"><%= authorInfo.firstname %> <%= authorInfo.lastname %></p>
+                    <p class="author-role <%= authorInfo.color %>"><i class="fa-solid fa-<%= authorInfo.icon %>"></i> <%= authorInfo.role %></p>
+                </div>
+            </div>
+        </a>
+        <% }; %>
+    </section>
+    <% if (adminBtn.length !== 0) { %>
+    <form class="bottom-section status-section flexdir-row" action="" method="post">
+        <fieldset class="left-section status-section-child margin1remauto">
+            <legend>Nouveau status</legend>
+            <% for (const status of Object.values(statusTypeBtn)) { %>
+            <button class="update-status-btn <%= status.color %>" id="updatestatusbtn" type="button"><%= status.status %></button>
+            <% }; %>
+            <div class="update-status-wrapper">
+                <ul class="update-status-container no-margin" id="updatestatuscontainer">
+                    <% for (const status of Object.values(statusTypeList)) { %>
+                    <li><button class="update-status-btn <%= status.color %>" id="input<%= status.value %>" type="submit" name="status" value="<%= status.value %>"><%= status.status %></button></li>
+                    <% }; %>
+                </ul>
+            </div>
+        </fieldset>
+        <fieldset class="right-section status-section-child margin1remauto">
+            <legend>Status actuel</legend>
+            <% for (const status of Object.values(recipeStatusValue)) { %>
+            <button class="update-status-btn <%= status.color %>" id="viewstatusbtn" type="button" name="view-status-btn"><%= status.status %></button>
+            <% }; %>
+            <div class="date-container">
+                <% for (const date of Object.values(recipeDateValues)) { %>
+                <div class="date-info">
+                    <p class="prefix margin1rem"><%= date.title %></p>
+                    <p class="date-info-text"><%= date.date %></p>
+                </div>
+                <% }; %>
+            </div>
+            <div class="recipe-ctg-container align-center widthauto-mobile no-border">
+                <legend>Numéro du ticket</legend>
+                <p class="prefix width100">(si le status de la recette est <b class="orange">A modifier</b>)</p>
+                <label class="label-form-role widthinherit" for="inputrecipeticket">
+                    <% recipeStatusValue.map(status => { %>
+                        <input class="login-input" id="inputrecipeticket" name="inputrecipeticket" value="<%= status.ticket %>" aria-label="input-recipe-ticket" type="number" autocapitalize="off" autocomplete="off">
+                    <% }); %>
+                    <button class="ctg-btn-form filter-tags" id="submitrecipeticket" name="valid-recipe-ticket" aria-label="valid-recipe-ticket" type="submit"><i class="fa-solid fa-check fa-xl green"></i></button>
+                </label>
+            </div>
+        </fieldset>
+    </form>
+    <% } else { %>
+        <section class="bottom-section status-section flexdir-row">
+            <div class="left-section status-section-child margin1remauto widthinherit">
+                <legend>Status actuel</legend>
+                <% for (const status of Object.values(recipeStatusValue)) { %>
+                <button class="update-status-btn <%= status.color %>" id="viewstatusbtn" type="button" name="view-status-btn"><%= status.status %></button>
+                <% }; %>
+                <div class="date-container">
+                    <% for (const date of Object.values(recipeDateValues)) { %>
+                    <div class="date-info">
+                        <p class="prefix margin1rem"><%= date.title %></p>
+                        <p class="date-info-text"><%= date.date %></p>
+                    </div>
+                    <% }; %>
+                </div>
+            </div>
+        </section>
+    <% } %>
+</main>
+
+<%- include('../partials/footer') %>

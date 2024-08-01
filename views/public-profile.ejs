@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<main>
+    <% for (const user of Object.values(publicProfile)) { %>
+    <section class="top-section margin1rem">
+        <h1 class="article-title"><%= title %> de <%= user.firstname %> <%= user.lastname %></h1>
+        <div class="profile-wrapper">
+            <section class="left-section">
+                <div class="profile-container no-border">
+                    <img class="imgsquared250x250" src="<%= user.imageProfile %>" alt="<%= user.imageDescription %>">
+                </div>
+            </section>
+            <section class="middle-section">
+                <section class="left-section">
+                    <div class="profile-container">
+                        <div class="profile-info">
+                        <p class="prefix">Surnom</p>
+                        <p class="profile-firstname"><%= user.firstname %> <%= user.lastname %></p>
+                        </div>
+                        <div class="profile-info">
+                            <p class="prefix">Pseudonyme</p>
+                            <p class="profile-pseudo"><%= user.pseudonyme %></p>
+                        </div>
+                        <div class="profile-info">
+                            <p class="prefix">Rôle</p>
+                            <p class="profile-role <%= user.rolecolor %>"><i class="fa-solid fa-<%= user.roleicon %>"></i> <%= user.role %></p>
+                        </div>
+                    </div>
+                </section>
+                <section class="right-section">
+                    <div class="profile-container">
+                        <h3>Description</h3>
+                        <div class="profile-info">
+                            <p class="text-center"><%= user.description %></p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+        <section class="bottom-section">
+            <section class="left-section">
+                <h3>Mes recettes</h3>
+                <div class="articles-container flexdir-row">
+                    <% if(Recipes.length !== 0) { %>
+                    <% for (const recipe of Object.values(Recipes)) { %>
+                    <a href="/recipe/<%= recipe.id %>">
+                        <article class="article-content">
+                            <img class="img210x160" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                            <h3 class="article-content-title"><%= recipe.title %></h3>
+                            <p class="article-content-paragraph"><%= recipe.description %></p>
+                        </article>
+                    </a>
+                    <% }; %>
+                    <% } else { %>
+                        <article class="article-content">
+                            <p class="article-content-paragraph prefix red">Cet utilisateur n'a encore rien posté publiquement</p>
+                        </article>
+                    <% } %>
+                </div>
+            </section>
+        </section>
+    </section>
+    <% }; %>
+</main>
+
+<%- include('partials/footer') %>

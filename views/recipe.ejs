@@ -1,0 +1,119 @@
+<%- include('partials/header') %>
+
+<main>
+    <section class="top-section">
+        <form class="tag-container" action="/recipes" method="post">
+            <ul class="tag-container-ul">
+                <% categoryList.map(category => { %>
+                    <li>
+                        <button class="tag-link" type="submit" name="input" value="<%= category.id %>"><%= category.title %></button>
+                    </li>
+                <% }); %>
+            </ul>
+        </form>
+    </section>
+    <section class="middle-section">
+        <div class="articles-container width100">
+            <% recipe.map(recipe => { %>
+            <article class="widthinherit">
+                <section class="left-section">
+                    <h1 class="article-title"><%= recipe.title %></h1>
+                    <img class="imgbigsize" src="<%= recipe.image %>" alt="<%= recipe.imageDescription %>" aria-label="<%= recipe.labelDescription %>" href="<%= recipe.labelURL %>">
+                    <p class="article-content-paragraph"><%= recipe.description %></p>
+                </section>
+                <section class="center-section">
+                    <form class="recipe-counter-content" action="" method="post">
+                        <div class="recipe-counter-label">
+                            <button class="recipe-counter-btn" id="data-decrease" type="button" name="people-increase" aria-label="people-increase"><i class="fa-solid fa-minus"></i></button>
+                            <label for="people">
+                                <input class="input-form-role text-center" id="people" name="people" value="<%= peopleNumber %>" type="text" aria-label="peopleNumber">
+                            </label>
+                            <button class="recipe-counter-btn" id="data-increase" type="button" name="people-decrease" aria-label="people-decrease"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <button class="ctg-btn-form filter-tags" id="submit-people" type="submit"><i class="fa-solid fa-check fa-xl green"></i></button>
+                    </form>
+                    <div class="recipe-tool">
+                        <button class="article-content-btn no-border width75" id="recipe-tool-btn"><h3>Matériels nécessaires</h3></button>
+                        <div class="recipe-container margintopbtm" id="recipe-tool-container">
+                            <% tool.forEach(tool => { %>
+                            <p class="paragraph"><%= tool %></p>
+                            <% }); %>
+                        </div>
+                    </div>
+                    <div class="recipe-ingredient">
+                        <button class="article-content-btn width75" id="recipe-ingredient-btn"><h3>Ingrédients nécessaires (pour <%= peopleNumber %>)</h3></button>
+                        <div class="recipe-container margintopbtm" id="recipe-ingredient-container">
+                            <% ingredient.forEach(ingredient => { %>
+                            <p class="paragraph"><%= ingredient %></p>
+                            <% }); %>
+                        </div>
+                    </div>
+                    <div class="recipe-content">
+                        <h3>Recette</h3>
+                        <div class="margintopbtm">
+                            <% preparation.forEach(preparation => { %>
+                            <p class="paragraph"><%= preparation %></p>
+                            <% }); %>
+                        </div>
+                    </div>
+                </section>
+                <section class="right-section">
+                    <div class="recipe-author">
+                        <div class="recipe-date">
+                            <p class="publish-date">Publié le <%= date_published %></p>
+                        </div>
+                        <% authorValues.forEach(author => { %>
+                        
+                        <div class="recipe-authorbar">
+                            <a href="/profile/<%= author.pseudonyme %>">
+                                <div class="recipe-authorbar-content">
+                                    <div class="authorbar-image">
+                                        <img class="recipe-authorimg" src="<%= author.image %>">
+                                    </div>
+                                    <div class="authorbar-info">
+                                        <p class="author-name"><%= author.firstname %> <%= author.lastname %></p>
+                                        <p class="author-role <%= author.rolecolor %>"><i class="far fa-solid fa-<%= author.roleicon %>"></i> <%= author.role %></p>
+                                    </div>
+                                </div>
+                            </a>
+                            <form class="recipe-authorbar-content widthauto-mobile heightauto margin-recipe" action="" method="post">
+                                <div class="margin03rem">
+                                    <% if(favorisList.length !== 0 && favorisList[0].selected) { %>
+                                        <button class="fav-btn redorange" id="fav-btn" type="submit" name="favorite" value="favorite"><i class="fa-solid fa-heart fa-xl"></i></button>
+                                    <% } else { %>
+                                        <button class="fav-btn" id="fav-btn" type="submit" name="favorite" value="favorite"><i class="fa-solid fa-heart fa-xl"></i></button>
+                                    <% } %>
+                                </div>
+                                <div class="authorbar-btn-container margin03rem">
+                                    <% if(likeList.length !== 0 && likeList[0].selected) { %>
+                                        <button class="authorbar-btn like-btn-border skyblue" id="like-btn" type="submit" name="like" value="like"><i class="fa-solid fa-thumbs-up fa-xl"></i></button>
+                                    <% } else { %>
+                                        <button class="authorbar-btn like-btn-border" id="like-btn" type="submit" name="like" value="like"><i class="fa-solid fa-thumbs-up fa-xl"></i></button>
+                                    <% } %>
+                                    <% if(dislikeList.length !== 0 && dislikeList[0].selected) { %>
+                                        <button class="authorbar-btn dislike-btn-border red" id="dislike-btn" type="submit" name="dislike" value="dislike"><i class="fa-solid fa-thumbs-down fa-flip-horizontal fa-xl"></i></button>
+                                    <% } else { %>
+                                        <button class="authorbar-btn dislike-btn-border" id="dislike-btn" type="submit" name="dislike" value="dislike"><i class="fa-solid fa-thumbs-down fa-flip-horizontal fa-xl"></i></button>
+                                    <% } %>
+                                </div>
+                            </form>
+                        </div>
+                        <% }); %>
+                    </div>
+                </section>
+            </article>
+            <% }); %>
+        </div>
+    </section>
+    <section class="bottom-section">
+        <section class="left-section">
+            <div class="flexdir-col width100">
+                <h3>Le titre de commentaire</h3>
+                <p>Le contenu d'un commentaire</p>
+                <p class="publish-date">Publié le 32 du mois</p>
+            </div>
+        </section>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <section class="top-section">
+        <section class="left-section">
+            <form class="search-role-form" id="search-admin-form" role="searchbox" action="" method="get">
+                <input class="search-role-input" id="search-role" type="search" name="searchrole" placeholder="Rechercher un rôle" aria-label="Search-role" autocapitalize="off" autocomplete="off">
+            </form>
+        </section>
+        <section class="right-section">
+            <div class="manager-sort-container" id="sort-container">
+                <form class="sort-content" action="" method="post" id="sortcontent">
+                    <select class="sort-selector" name="sort" id="sort-select" aria-label="sort-selector">
+                        <% for (const dropdown of Object.values(sortDropdown)) { %>
+                            <option class="sort-btn author-name" value="">Trier par : <%= dropdown.title %></option>
+                        <% }; %>
+                        <% for (const sort of Object.values(sortPanelList)) { %>
+                            <option class="sort-btn" value="<%= sort.id %>"><%= sort.title %></option>
+                        <% }; %>
+                    </select>
+                    <button class="sort-btn" type="submit" name="sort" aria-label="Bouton de validation du tri"><i class="fa-solid fa-check fa-xl green"></i></button>
+                </form>
+            </div>
+            <section class="middle-section">
+                <form class="list-tags" action="" method="post">
+                    <% for (const sortbtn of Object.values(sortingBtnList)) { %>
+                    <li class="width100">
+                        <button class="ctg-btn-form" type="<%= sortbtn.type %>" name="<%= sortbtn.name %>" value="<%= sortbtn.value %>"><%= sortbtn.title %></button>
+                    </li>
+                    <% }; %>
+                </form>
+            </section>
+        </section>
+    </section>
+    <section class="bottom-section">
+        <section class="left-section">
+            <div class="articles-container width100 borderlightgray">
+                <% for (const role of Object.values(rolesList)) { %>
+                <a class="width100" href="/panel/admin/roles-list/update/<%= role.name %>">
+                    <article class="article-content-body">
+                        <ul class="article-content-user flexdir <%= role.color %>">
+                            <li class="article-content-li">
+                                <i class="article-content-user-paragraph no-margin fa-solid fa-<%= role.icon %> fa-2xl"></i>
+                            </li>
+                            <li class="article-content-li">
+                                <p class="article-content-user-paragraph no-margin"><%= role.name %></p>
+                            </li>
+                            <li class="article-content-li">
+                                <p class="article-content-user-paragraph no-margin"><%= role.users %></p>
+                            </li>
+                        </ul>
+                    </article>
+                </a>
+                <% }; %>
+            </div>
+        </section>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

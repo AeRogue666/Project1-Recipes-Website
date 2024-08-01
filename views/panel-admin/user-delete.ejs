@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <form class="top-section" action="" method="post">
+        <h3><%= title %></h3>
+        <% for (const user of Object.values(userInfo)) { %>
+        <fieldset class="left-section">
+            <div class="recipes-border width100">
+                <p>L'utilisateur qui va être supprimé: </p>
+                <legend><%= user.firstname %> <%= user.lastname %> (<%= user.pseudonyme %>)</legend>
+                <img class="imgsquared250x250 margin1rem" src="<%= user.image %>" id="<imguser-<%= user.pseudonyme %>" alt="<%= user.imageDescription %>">
+                <p>Êtes-vous sur de vouloir supprimer cet utilisateur ?</p>
+                <p>(Le voyage dans le passé nécessitant 2.1 GigoWatts, nous ne pourrons rien pour vous...)</p>
+            </div>
+        </fieldset>
+        <fieldset class="right-section flexdir-row">
+            <button class="manager-article-btn a-ccess" id="delete-user-btn" type="submit" name="deleteuserbtn" value="deleteuser"><i class="fa-solid fa-trash"> Supprimer</i></button>
+            <a class="manager-article-btn a-ccess" id="cancel-action-btn" type="button" href="/panel/admin/users-list/"><i class="fa-solid fa-xmark"> Annuler</i></a>
+        </fieldset>
+        <% }; %>
+    </form>
+</main>
+
+<%- include('../partials/footer') %>

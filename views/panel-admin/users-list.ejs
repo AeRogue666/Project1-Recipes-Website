@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <section class="top-section no-padding">
+        <section class="left-section">
+            <form class="search-user-form" id="search-admin-form" role="searchbox" action="" method="get">
+                <input class="search-user-input" id="search-user" type="search" name="searchuser" placeholder="Rechercher un utilisateur" autocapitalize="off" autocomplete="off">
+            </form>
+        </section>
+        <section class="right-section">
+            <form class="list-tags" action="" method="post">
+                <% for (const sortbtn of Object.values(sortingBtnList)) { %>
+                <li class="width100">
+                    <button class="ctg-btn-form" type="<%= sortbtn.type %>" name="<%= sortbtn.name %>" value="<%= sortbtn.value %>"><%= sortbtn.title %></button>
+                </li>
+                <% }; %>
+            </form>
+        </section>
+    </section>
+    <section class="bottom-section">
+        <section class="left-section">
+            <div class="articles-container width100 borderlightgray">
+                <% for (const user of Object.values(usersList)) { %>
+                <a class="width100" href="/panel/admin/users-list/update/<%= user.pseudonyme %>">
+                    <article class="article-content-body">
+                        <ul class="article-content-user flexdir">
+                            <li class="article-content-li">
+                                <img class="article-content-user-img" src="<%= user.image %>">
+                            </li>
+                            <li class="article-content-li">
+                                <p class="article-content-user-paragraph no-margin"><%= user.firstname %> <%= user.lastname %></p>
+                            </li>
+                            <li class="article-content-li">
+                                <p class="article-content-user-paragraph no-margin"><%= user.pseudonyme %></p>
+                            </li>
+                            <li class="article-content-li">
+                                <p class="article-content-user-paragraph no-margin <%= user.color %>"><%= user.role %></p>
+                            </li>
+                            <li class="article-content-li">
+                                <p class="article-content-user-paragraph no-margin <%= user.statuscolor %>"><%= user.status %></p>
+                            </li>
+                        </ul>
+                    </article>
+                </a>
+                <% }; %>
+            </div>
+        </section>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+
+<main>
+    <section class="main-section">
+        <%- include('burger') %>
+        <section class="top-section no-section-border">
+            <% if(userBtn.length !== 0 || authorBtn.length !== 0 || adminBtn.length !== 0) { %>
+            <section class="left-section no-margin">
+                <div class="articles-container width100">
+                    <div class="article-content mobile-width section-border">
+                        <h3 class="title"><%= title %></h3>
+                        <% for (const element of Object.values(managerBtnList)) { %>
+                        <a class="a-ccess bg-orange" href="<%= element.url %>"><i class="fa-solid fa-<%= element.icon %> fa-xl"></i><p class="article-content-paragraph"><%= element.title %></p></a>
+                        <% }; %>
+                    </div>
+                </div>
+            </section>
+            <% }; %>
+        </section>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

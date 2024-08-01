@@ -1,0 +1,63 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <form class="top-section" action="" method="post">
+        <legend class="title">Créer une recette</legend>
+        <fieldset class="left-section">
+            <% for (const form of Object.values(recipeFormTypeList)) { %>
+            <label class="label-form" for="input<%= form.id %>">
+                <legend><%= form.title %></legend>
+                <input class="label-form-input" id="input<%= form.id %>" type="<%= form.type %>" name="<%= form.name %>" autocomplete="off" autocapitalize="off">
+                </label>
+            <% }; %>
+            <div class="recipe-counter-content">
+                <legend>Nombre de personnes</legend>
+                <p>Précisez le nombre de personnes pour laquelle votre recette est faite (1-24)</p>
+                <div class="recipe-counter-label">
+                    <button class="recipe-counter-btn" id="data-decrease" type="button" name="people-increase" aria-label="people-increase"><i class="fa-solid fa-minus"></i></button>
+                    <label for="people">
+                        <input class="input-form-role text-center" id="people" name="people" value="<%= peopleNumber %>" type="text" aria-label="peopleNumber">
+                    </label>
+                    <button class="recipe-counter-btn" id="data-increase" type="button" name="people-decrease" aria-label="people-decrease"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="article-content minh-maxh-inherit">
+                    <p class="text-align-left"><b>NOTE: </b> Si votre recette est faite pour plusieurs personnes ne divisez pas le nombre d'ingrédients nécessaires, appuyez sur le <b>+</b> pour ajuster le nombre de personnes.</p>
+                    <p class="text-align-left">Cependant, vous pouvez diviser le nombre d'ingrédients par vous-même, auquel cas, veuillez tout mettre pour <b class="red">1 personne</b>.</p>
+                </div>
+            </div>
+            <% for (const form of Object.values(recipeFormTextareaList)) { %>
+            <label class="label-form" for="textarea<%= form.id %>">
+                <legend><%= form.title %></legend>
+                <p>(<%= form.maxlength %> caractères maximum)</p>
+                <textarea class="autoresizing textarea minh-minw-form" id="textarea<%= form.id %>" placeholder="<%= form.placeholder %>" name="<%= form.name %>" maxlength="<%= form.maxlength %>"></textarea>
+            </label>
+            <% }; %>
+        </fieldset>
+        <fieldset class="center-section margin1rem minh-maxh-inherit">
+            <legend>Sélectionner les catégories</legend>
+            <div class="recipe-ctg-container section-border">
+                <% categoriesList.map(content => { %>
+                    <div class="ctg">
+                        <legend><%= content.title %></legend>
+                        <ul class="ctg-body">
+                            <% content.data.map(category => { %>
+                                <li>
+                                    <label class="recipe-ctg-label" for="input-<%= category.id %>">
+                                        <p><%= category.name %></p>
+                                        <input class="ctg-btn" id="input-<%= category.id %>" name="<%= category.name %>" type="checkbox" value="<%= category.value %>" autocomplete="off" autocapitalize="off">
+                                    </label>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                <% }); %>
+            </div>
+        </fieldset>
+        <fieldset class="right-section margin1rem">
+            <button class="update-btn-form ctg-btn-form" type="submit" name="submit-new-recipe" id="submitnewrecipe">Envoyer</button>
+        </fieldset>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

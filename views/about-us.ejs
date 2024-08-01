@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+<main class="fit-content">
+    <section class="top-section flexdir-row">
+            <section class="left-section">
+                <div class="about-content">
+                    <div class="about-title">
+                        <h1 class="title"><%= title %></h1>
+                    </div>
+                    <div class="about-job">
+                        <% for(const me of Object.values(aboutme)) { %>
+                            <p class="about-intro"><%= me.content %></p>
+                        <% }; %>
+                        <% for (const job of Object.values(aboutjob)) { %>
+                            <p><%= job.content %></p>
+                        <% }; %>
+                    </div>
+                </div>
+            </section>
+            <section class="right-section">
+                <div class="about-content">
+                    <div class="about-img">
+                        <img src="https://images.pexels.com/photos/375880/pexels-photo-375880.jpeg" alt="By Clem Onojeghuo https://www.pexels.com/@conojeghuo/">
+                    </div>
+                    <div class="about-skills">
+                        <h3>Compétences</h3>
+                        <% for(const skill of Object.values(aboutskills)) { %>
+                        <p><%= skill.content %></p>
+                        <% }; %>
+                    </div>
+                    <div class="about-social-media">
+                        <a><i class="fa-brands fa-github"></i><p>AurelDev</p></a>
+                        <a><i class="fa-brands fa-twitter"></i><p>@AurelDev</p></a>
+                        <a><i class="fa-brands fa-slack"></i><p>AurelDev</p></a>
+                    </div>
+                </div>
+            </section>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

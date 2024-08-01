@@ -1,0 +1,345 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('burger') %>
+    <section class="top-section">
+        <section class="left-section">
+            <div class="ticket-container">
+                <ul class="ticket-subcontainer flexdir-col">
+                    <% ticketInfos.map(content => { %>
+                        <% content.data.map(ticket => { %>
+                            <% ticket.data.map(value => { %>
+                                <% if(value.title == 'Status') { %>
+                                <li class="article-content-li widthauto">
+                                    <p class="ticket-status-paragraph <%= value.color %>"><%= value.infotitle %></p>
+                                </li>
+                                <% } %>
+                            <% }) %>
+                            <li class="article-content-li widthauto">
+                                <p class="article-content-paragraph no-margin ticketid">#<%= ticket.id %></p>
+                            </li>
+                            <li class="article-content-li widthauto">
+                                <h1 class="article-title no-margin"><%= ticket.title %></h1>
+                            </li>
+                            <ol class="ticket-subcontainer--ol">
+                                <% ticket.data.map(value => { %>
+                                    <% if(value.title !== 'Status') { %>
+                                    <li class="article-content-li widthauto">
+                                        <p class="ticket-status-paragraph <%= value.color %>"><%= value.infotitle %></p>
+                                    </li>
+                                    <% } %>
+                                <% }) %>
+                            </ol>
+                        <% }) %>
+                    <% }); %>
+                </ul>
+                <div class="ticket-message-counter">
+                    <p class="ticket-message-counter-paragraph">Messages:</p>
+                    <p class="ticket-message-counter-paragraph"><%= ticketMessages.length %> <i class="fa-solid fa-message"></i></p>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section class="middle-section sectionticketminhmaxh">
+        <section class="left-section articles-container minh-maxh-inherit no-margin">
+            <article class="width100 height100 minh-maxh-inherit overflow-auto borderlightgray">
+                <div class="article-content-body flexdir-col flexdir-col-desktop">
+                    <div class="recipe-author">
+                        <div class="recipe-authorbar justify-center no-border">
+                            <div class="article-content-user flexdir-col flexdir-col-desktop align-start justify-start align-center border-btm width75 height100">
+                                <p class="paragraph redorange">Début du ticket</p>
+                            </div>
+                        </div>
+                    </div>
+                    <% ticketMessages.map(message => { %>
+                    <div class="recipe-author margintopbtm" id="ticketmessage<%= message.id %>">
+                            <div class="recipe-authorbar no-border">
+                                <a class="recipe-authorbar no-border" href="/profile/<%= message.pseudonyme %>" target="_blank">
+                                    <div class="authorbar-image">
+                                        <img class="profile-img" src="<%= message.image %>">
+                                    </div>
+                                    <div class="authorbar-info">
+                                        <p class="author-name profile-pseudo <%= message.color %>"><%= message.firstname %> <%= message.lastname %></p>
+                                        <p class="author-role profile-role <%= message.color %>"><%= message.role %></p>
+                                        <p class="recipe-date publish-date">Publié le <%= message.dateCreated %></p>
+                                    </div>
+                                </a>
+                            </div>
+                        <div class="article-content-user flexdir-col flexdir-col-desktop align-start justify-start width100 height100">
+                            <p class="paragraph text-align-left"><%= message.content %></p>
+                            <% if(message.dateUpdated !== '' || message.dateUpdated.length !== 0) { %>
+                                <div class="recipe-date update-date">
+                                    <p class="publish-date">Modifié le <%= message.dateUpdated %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                        <form class="ticket-btn-message-form" action="" method="post" id="btnmessageform<%= message.id %>">
+                            <div class="ticket-btn-message-container" id="btnmessagecontainer<%= message.id %>">
+                                <button class="update-btn-form ctg-btn-form btn60x60" name="editmessage" value="<%= message.id %>" type="submit"><i class="fa-solid fa-pencil fa-xl"></i></button>
+                                <button class="update-btn-form ctg-btn-form btn60x60" name="deletemessage" value="<%= message.id %>" type="submit"><i class="fa-solid fa-trash fa-xl"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <% }); %>
+                </div>
+            </article>
+        </section>
+    </section>
+    <form class="bottom-section flexdir-row" action="" method="post">
+        <fieldset class="left-section widthauto">
+            <% ticketFormTextareaList.map(form => { %>
+                <% if(typeof editMessage == 'undefined' || editMessage.length == '0') { %>
+                    <label class="label-form" for="textarea<%= form.id %>">
+                        <textarea class="autoresizing textarea minh-minw-form" id="textarea<%= form.id %>" placeholder="<%= form.placeholder %>" name="<%= form.name %>" maxlength="<%= form.maxlength %>"></textarea>
+                    </label>
+                <% } else { %>
+                    <% editMessage.map(message => { %>
+                        <label class="label-form" for="textarea<%= form.id %>">
+                            <textarea class="autoresizing textarea minh-minw-form" id="textarea<%= form.id %>" placeholder="<%= form.placeholder %>" name="<%= message.name %>" maxlength="<%= form.maxlength %>"><%= message.content %></textarea>
+                            <input name="<%= message.paragraph %>" value="<%= message.id %>" type="hidden"></input>
+                        </label>
+                    <% }); %>
+                <% } %>
+            <% }); %>
+        </fieldset>
+        <fieldset class="middle-section flexdir">
+            <div class="inputs-container widthauto">
+                <button class="update-btn-form ctg-btn-form btn60x60 margin1rem" type="button" name="btn-settings" id="btnsettings"><li class="fa-solid fa-gear fa-xl"></li></button>
+                <button class="update-btn-form ctg-btn-form btn60x60 margin1rem" type="button" name="btn-emotes" id="btnemotes"><li class="fa-solid fa-smile fa-xl"></li></button>
+                <button class="update-btn-form ctg-btn-form btn60x60 margin1rem" type="submit" name="submit-message" id="submitmessage"><li class="fa-solid fa-arrow-right fa-xl"></li></button>
+            </div>
+        </fieldset>
+    </form>
+    <div class="setting-container" id="settingscontainer">
+        <section class="left-section">
+            <h1 class="title">Paramètres du <%= title %></h1>
+            <div class="inputs-container justify-center">
+                <button class="update-btn-form ctg-btn-form margin1rem width100" id="btninfos" type="button" name="btn-infos">Informations</button>
+                <button class="update-btn-form ctg-btn-form margin1rem width100" id="btnparams" type="button" name="btn-params">Paramètres</button>
+                <button class="update-btn-form ctg-btn-form margin1rem width100" id="btnusers" type="button" name="btn-users">Utilisateurs</button>
+            </div>
+        </section>
+        <section class="right-section">
+            <article class="article-content no-maxwmaxh width100">
+                <% ticketInfos.map(content => { %>
+                    <div class="article-content-body--ticket width100 opened" id="infos-container">
+                        <h3 class="article-content-title title"><%= content.title %></h3>
+                        <% content.data.map(ticket => { %>
+                            <div class="ticket-container setting-info-container">
+                                <div class="ticket-info">
+                                    <p class="prefix prefix-title">Titre du ticket</p>
+                                    <p class="article-content-title text-center"><%= ticket.title %></p>
+                                </div>
+                                <a class="ticket-info" href="/profile/<%= ticket.pseudonyme %>" target="_blank">
+                                    <p class="prefix prefix-title">Informations sur l'auteur</p>
+                                    <div class="recipe-authorbar no-border margin1rem">
+                                        <div class="authorbar-image">
+                                            <img class="profile-img" src="<%= ticket.image %>">
+                                        </div>
+                                        <div class="authorbar-info">
+                                            <p class="author-name profile-pseudo"><%= ticket.firstname %> <%= ticket.lastname %></p>
+                                            <p class="author-role profile-role <%= ticket.color %>"><%= ticket.role %></p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="ticket-list">
+                                    <div class="ticket-info">
+                                        <p class="prefix prefix-title">Date de publication</p>
+                                        <p class="ticket-info-paragraph recipe-date publish-date">Ticket publié le <%= ticket.dateCreated %></p>
+                                    </div>
+                                    <div class="ticket-info">
+                                        <p class="prefix prefix-title">Date de modification</p>
+                                        <p class="ticket-info-paragraph recipe-date publish-date">Ticket modifié le <%= ticket.dateUpdated %></p>
+                                    </div>
+                                </div>
+                                <div class="ticket-list flexdir">
+                                    <% ticket.data.map(value => { %>
+                                        <div class="ticket-info">
+                                            <p class="prefix prefix-title"><%= value.title %></p>
+                                            <p class="ticket-info-paragraph <%= value.color %>"><%= value.infotitle %></p>
+                                        </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <% }); %>
+                    <form class="ctg-content widthinherit relative border-top" id="params-container" action="" method="post">
+                        <% ticketSettings.map(content => { %>
+                            <div class="left-section minh-maxh-inherit">
+                                <div class="title">
+                                    <h3 class="article-title"><%= content.title %></h3>
+                                </div>
+                                <% content.data.map(ticket => { %>
+                                    <div class="ctg no-margin flexdir-col-desktop params-div">
+                                        <% if(!ticket.data) { %>
+                                            <% if(ticket.id !== 'NO_PERMISSION') { %>
+                                                <p class="prefix-title ctg-title no-border"><%= ticket.title %></p>
+                                                <label class="label-form widthauto-mobile" for="input<%= ticket.id %>">
+                                                    <input class="label-form-input text-center" id="input<%= ticket.id %>" name="<%= ticket.name %>" value="<%= ticket.value %>" type="text">
+                                                </label>
+                                            <% } %>
+                                        <% } else if(ticket.data) { %>
+                                            <p class="prefix-title ctg-title no-border"><%= ticket.title %></p>
+                                            <ul class="ctg-body">
+                                            <% ticket.data.map(button => { %>
+                                                <% if(button.selected) { %>
+                                                    <li>
+                                                        <button class="ticket-btn-form width100 <%= button.color %> selected" id="btn<%= button.id %>" name="<%= button.name %>" value="<%= button.value %>" type="submit"><%= button.title %></button>
+                                                    </li>
+                                                <% } else { %>
+                                                    <li>
+                                                        <button class="ticket-btn-form focused-btn width100 <%= button.color %>" id="btn<%= button.id %>" name="<%= button.name %>" value="<%= button.value %>" type="submit"><%= button.title %></button>
+                                                    </li>
+                                                <% } %>
+                                            <% }); %>
+                                            </ul>
+                                        <% } %>
+                                    </div>
+                                <% }); %>
+                                <% if(content.data[0].id !== 'NO_PERMISSION') { %>
+                                    <div class="article-content no-minwminh no-maxwmaxh width75">
+                                        <% content.data.map(ticket => { %>
+                                            <% if(ticket.ticket_id) { %> 
+                                                <a class="a-ccess red profile-deletebtn" id="btndeleteticket" href="/panel/support/ticket/delete/<%= ticket.ticket_id %>">Supprimer le ticket</a>
+                                            <% } %>
+                                        <% }); %>
+                                    </div>
+                                <% } %>
+                            </div>
+                     <% }); %>
+                    </form>
+                    <form class="top-section article-inputs" action="" method="post" id="users-container">
+                        <div class="article-content no-minwminh no-maxwmaxh width100 relative">
+                            <button class="update-btn-form ctg-btn-form margin1rem" id="btnselectusers" type="button" name="btn-select-users">Gérer les utilisateurs</button>
+                        </div>
+                        <fieldset class="left-section articles-container borderlightgray" id="users-container-body">
+                            <article class="width100">
+                                <legend class="article-title">Liste des utilisateurs (ticket)</legend>
+                                <label class="search-user-form justify-center" for="input-searchuser">
+                                    <% if(ticketUsers[0].searched) { %>
+                                        <input class="search-user-input" id="input-searchuser" type="search" name="searchuser" value="<%= ticketUsersInputContent %>" autocomplete="off" autocapitalize="off">
+                                    <% } else { %>
+                                        <input class="search-user-input" id="input-searchuser" type="search" name="searchuser" placeholder="Rechercher un utilisateur" autocomplete="off" autocapitalize="off">
+                                    <% } %>
+                                </label>
+                                <div class="article-content no-maxwmaxh">
+                                    <% ticketUsers.map(content => { %>
+                                        <% if(content.data) { %>
+                                            <p class="prefix prefix-title <%= content.color %>"><%= content.name %></p>
+                                            <% content.data.map(user => { %>
+                                                <a class="btn-form-role ticket-container setting-info-container" href="/profile/<%= user.pseudonyme %>" target="_blank">
+                                                    <div class="ticket-info">
+                                                        <div class="recipe-authorbar no-border">
+                                                            <div class="authorbar-image">
+                                                                <img class="profile-img" src="<%= user.image %>">
+                                                            </div>
+                                                            <div class="authorbar-info">
+                                                                <p class="author-name profile-pseudo <%= content.color %>"><%= user.firstname %> <%= user.lastname %></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            <% }); %>
+                                        <% } else if(content.searched == 'yes') { %>
+                                            <p class="prefix prefix-title <%= content.color %>"><%= content.role %></p>
+                                            <a class="btn-form-role ticket-container setting-info-container" href="/profile/<%= content.pseudonyme %>" target="_blank">
+                                                <div class="ticket-info">
+                                                    <div class="recipe-authorbar no-border">
+                                                        <div class="authorbar-image">
+                                                            <img class="profile-img" src="<%= content.image %>">
+                                                        </div>
+                                                        <div class="authorbar-info">
+                                                            <p class="author-name profile-pseudo <%= content.color %>"><%= content.firstname %> <%= content.lastname %></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        <% } %>
+                                    <% }); %>
+                                </div>
+                            </article>
+                        </fieldset>
+                        <div class="flexdir-col width100 opened">
+                            <fieldset class="center-section articles-container borderlightgray invisible" id="allusers-container">
+                                <article class="article-content no-maxwmaxh width100">
+                                    <legend class="article-title">Liste des utilisateurs (ticket)</legend>
+                                    <label class="search-user-form justify-center" for="input-searchaddeduser">
+                                        <% if(ticketUsersAdded[0].searched) { %>
+                                            <input class="search-user-input" id="input-searchaddeduser" type="search" name="searchaddeduser" value="<%= ticketUsersAddedInputContent %>" autocomplete="off" autocapitalize="off">
+                                        <% } else { %>
+                                            <input class="search-user-input" id="input-searchaddeduser" type="search" name="searchaddeduser" placeholder="Rechercher un utilisateur" autocomplete="off" autocapitalize="off">
+                                        <% } %>
+                                    </label>
+                                    <div class="article-content no-maxwmaxh">
+                                        <% ticketUsersAdded.map(content => { %>
+                                            <% if(content.data) { %>
+                                                <% content.data.map(user => { %>
+                                                    <button class="ctg-btn-form btn-form-role recipe-authorbar no-border" id="input-<%= user.id %>" type="submit" name="useradded" value="<%= user.pseudonyme %>" autocomplete="off" autocapitalize="off">
+                                                        <div class="authorbar-image">
+                                                            <img class="profile-img" src="<%= user.image %>"> 
+                                                        </div>
+                                                        <div class="authorbar-info heightauto">
+                                                            <p class="author-name"><%= user.firstname %> <%= user.lastname %></p>
+                                                            <% if(user.pseudonyme) { %>
+                                                                <p class="prefix-role"><%= user.pseudonyme %></p>
+                                                            <% } %>
+                                                            <p class="prefix-role <%= content.color %>"><%= content.name %></p>
+                                                        </div>
+                                                    </button>
+                                                <% }) %>
+                                            <% } else if(content.searched == 'yes') { %>
+                                                <button class="ctg-btn-form btn-form-role recipe-authorbar no-border opened" id="input-<%= content.id %>" type="submit" name="useradded" value="<%= content.pseudonyme %>" autocomplete="off" autocapitalize="off">
+                                                    <div class="authorbar-image">
+                                                        <img class="profile-img" src="<%= content.image %>"> 
+                                                    </div>
+                                                    <div class="authorbar-info heightauto">
+                                                        <p class="author-name"><%= content.firstname %> <%= content.lastname %></p>
+                                                        <% if(content.pseudonyme) { %>
+                                                            <p class="prefix-role"><%= content.pseudonyme %></p>
+                                                        <% } %>
+                                                        <p class="prefix-role <%= content.color %>"><%= content.role %></p>
+                                                    </div>
+                                                </button>
+                                            <% } %>
+                                        <% }); %>
+                                    </div>
+                                </article>
+                            </fieldset>
+                            <fieldset class="right-section articles-container borderlightgray invisible" id="allusers-list">
+                                <article class="article-content no-maxwmaxh width100">
+                                    <legend class="article-title">Tous les utilisateurs</legend>
+                                    <label class="search-user-form justify-center" for="input-searchalluser">
+                                        <% if(ticketUsersList[0].searched) { %>
+                                            <input class="search-user-input" id="input-searchalluser" type="search" name="searchalluser" value="<%= ticketUsersListInputContent %>" autocomplete="off" autocapitalize="off">
+                                        <% } else { %>
+                                            <input class="search-user-input" id="input-searchalluser" type="search" name="searchalluser" placeholder="Rechercher un utilisateur" autocomplete="off" autocapitalize="off">
+                                        <% } %>
+                                    </label>
+                                    <div class="article-content no-maxwmaxh">
+                                        <% ticketUsersList.map(user => { %>
+                                        <button class="ctg-btn-form btn-form-role no-border" id="input-<%= user.id %>" type="submit" name="alluserslist" value="<%= user.pseudonyme %>" autocomplete="off" autocapitalize="off">
+                                            <div class="authorbar-image">
+                                                <img class="profile-img" src="<%= user.image %>"> 
+                                            </div>
+                                            <div class="authorbar-info">
+                                                <p class="author-name"><%= user.firstname %> <%= user.lastname %></p>
+                                                <% if(user.pseudonyme) { %>
+                                                    <p class="prefix-role"><%= user.pseudonyme %></p>
+                                                <% } %>
+                                                <p class="prefix-role <%= user.color %>"><%= user.role %></p>
+                                            </div>
+                                        </button>
+                                        <% }); %>
+                                    </div>
+                                </article>
+                            </fieldset>
+                        </div>
+                    </form>
+            </article>
+        </section>
+    </div>
+</main>
+<div class="blury" id="settingBluryWrapper"></div>
+
+<%- include('../partials/footer') %>

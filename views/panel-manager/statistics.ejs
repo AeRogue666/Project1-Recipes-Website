@@ -1,0 +1,106 @@
+<%- include('../partials/header') %>
+
+<main>
+    <%- include('../panel/burger') %>
+    <legend class="title"><%= title %></legend>
+    <section class="top-section flexdir-row">
+        <form class="width100 margin1rem" action="" method="post">
+            <fieldset class="left-section status-section">
+                <h3>Utilisateurs</h3>
+                <% userSelected.map(user => { %>
+                    <button class="update-status-btn" id="selectuserbtn" type="button" name="selectuserbtn">
+                        <div class="authorbar-info align-center flexdir flexdir-row minw100">
+                            <p class="author-role"><%= user.firstname %> <%= user.lastname %></p>
+                            <p class="prefix-role"><%= user.pseudonyme %></p>
+                            <p class="prefix-role <%= user.color %>"><%= user.role %></p>
+                        </div>
+                    </button>
+                <% }); %>
+                <div class="update-status-container" id="selectusercontainer">
+                    <ul class="no-margin borderlightgray10px">
+                    <% usersList.map(user => { %>
+                        <li><button class="update-status-btn no-border" id="input-<%= user.pseudonyme %>" type="submit" name="user" value="<%= user.pseudonyme %>">
+                            <div class="authorbar-info align-center flexdir flexdir-row minw100">
+                                <p class="author-role"><%= user.firstname %> <%= user.lastname %></p>
+                                <p class="prefix-role"><%= user.pseudonyme %></p>
+                                <p class="prefix-role <%= user.color %>"><%= user.role %></p>
+                            </div>
+                        </button></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </fieldset>
+        </form>
+        <form class="width100 margin1rem" action="" method="post">
+            <fieldset class="right-section status-section">
+                <h3>Recettes</h3>
+                <% recipeSelected.map(recipe => { %>
+                    <button class="update-status-btn" id="selectrecipebtn" type="button" name="selectrecipebtn">
+                        <div class="authorbar-info align-center flexdir flexdir-row minw100"><p class="author-role"><%= recipe.title %></p></div>
+                        </button>
+                <% }); %>
+                <div class="update-status-container" id="selectrecipecontainer">
+                    <ul class="no-margin borderlightgray10px">
+                    <% if(recipesList.length >= 1) { %>
+                        <% recipesList.map(recipe => { %>
+                            <li><button class="update-status-btn no-border" id="input-<%= recipe.id %>" type="submit" name="recipe" value="<%= recipe.id %>">
+                                <div class="authorbar-info align-center flexdir flexdir-row minw100"><p class="author-role"><%= recipe.title %></p></div>
+                            </button></li>
+                        <% }); %>
+                    <% } else { %>
+                        <li><button class="update-status-btn no-border" id="input-1" type="button">
+                            <div class="authorbar-info align-center flexdir flexdir-row minw100"><p class="author-role">Cet utilisateur n'a posté aucune recette</p></div>
+                        </button></li>
+                    <% } %>
+                    </ul>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+    <section class="bottom-section">
+        <section class="left-section">
+            <% if(recipeSelected.length >= 1 && recipeSelected[0].image) { %>
+                <% recipeSelected.map(recipe => { %>
+                    <a class="width75 borderlightgray10px" href="/recipe/<%= recipe.id %>" target="_blank">
+                        <div class="recipe-authorbar profile-container flexdir-row no-border">
+                            <div class="authorbar-image no-margin">
+                                <img class="img320x180 border10px" src="<%= recipe.image %>">
+                            </div>
+                            <div class="authorbar-info align-center">
+                                <h3 class="title"><%= recipe.title %></h3>
+                                <div class="recipe-date">
+                                    <b><%= recipe.dateTitle %></b>
+                                    <p class="publish-date"><%= recipe.date %></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                <% }); %>
+            <% } %>
+        </section>
+        <section class="right-section">
+            <div class="articles-container width100 flexdir-col">
+                <% if(favoritesValues.length !== 0) { %>
+                    <% favoritesValues.map(favorite => { %>
+                        <% if(!favorite.error) { %>
+                            <article class="article-content width100 no-minwminh margin03rem borderlightgray10px">
+                                <h5 class="article-title margin1rem"><%= favorite.title %></h5>
+                                <p class="author-name"><%= favorite.value %> <b><%= favorite.content %></b></p>
+                            </article>
+                        <% } else { %>
+                            <% userSelected.map(user => { %>
+                                <p class="paragraph <%= user.color %>"><%= favorite.error %></p>
+                            <% }); %>
+                        <% } %>
+                    <% }); %>
+                <% } else { %>
+                    <article class="article-content width100 no-minwminh">
+                        <p class="paragraph">Veuillez sélectionner une recette</p>
+                    </article>
+                <% } %>
+            </div>
+        </section>
+    </section>
+</main>
+
+<%- include('../partials/footer') %>

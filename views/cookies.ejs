@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<main class="fit-content">
+    <section class="top-section">
+        <section class="left-section">
+            <h1 class="title">Conditions Générales d'Utilisation des Cookies</h1>
+            <p class="prefix widthauto-mobile">En vigueur au <span>17/01/2024</span></p>
+        </section>
+        <section class="right-section">
+            <section class="article-container">
+                <% for (const cookie of Object.values(cookiesContentList)) { %>
+                <article class="article-content no-minwminh no-maxwmaxh widthauto-mobile" id="cookie-<%=cookie.id%>">
+                    <h2 class="article-content-title text-center"><%= cookie.title %></h2>
+                    <p class="article-content-paragraph"><%= cookie.content %></p>
+                </article>
+                <% }; %>
+            </section>
+            <p class="prefix widthauto-mobile">Plus d'informations dans la rubrique <a href="/cgu">CGU</a></p>
+        </section>
+    </section>
+</main>
+
+<%- include('partials/footer') %>
