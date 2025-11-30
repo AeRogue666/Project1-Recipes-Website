@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config();
+/* import dotenv from "dotenv";
+dotenv.config(); // Not needed anymore (from Node.JS 20+) */
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale.js';
 import store from 'store2';

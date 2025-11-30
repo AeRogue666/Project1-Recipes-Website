@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config();
+/* import dotenv from "dotenv";
+dotenv.config(); // Not needed anymore (from Node.JS 20+) */
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale.js';
 import { isObjEmpty, isString, filterCategories, filterPanelBtn, compareValues, getUserCreatedValues, getUserUpdatedValues, getRoleValues, fetchAllMessages, getMessageAuthorValues, compareTicketValues, noAlphaNum, deleteProfileImage, postProfileImage, hasNumber, replaceNumber, divideNumber } from '../dist/controllerModule.js';

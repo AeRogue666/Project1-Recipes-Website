@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config();
+/* import dotenv from "dotenv";
+dotenv.config(); // Not needed anymore (from Node.JS 20+) */
 import { isObjEmpty, isString, compareValues, apiErrorManager, flatErrorResult } from '../dist/controllerModule.js';
 import pkg from 'jsonwebtoken';
 
