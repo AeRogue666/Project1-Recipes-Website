@@ -1,0 +1,7 @@
+.env
+node_modules
+webpack.config.cjs
+*.sql
+Documentations_du_projet
+database
+edited_for_screens
